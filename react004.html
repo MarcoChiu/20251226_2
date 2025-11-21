@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React 作品實戰班 04.資料渲染 + 多筆 + useState</title>
+  <!-- React 和 ReactDOM（開發版本） -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel Standalone：讓瀏覽器即時編譯 JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .meal-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background-color: #fff;
+      transition: transform 0.2s;
+    }
+
+    .meal-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .meal-image {
+      width: 120px;
+      height: 90px;
+      border-radius: 5px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .meal-info {
+      flex: 1;
+    }
+
+    .meal-info p {
+      margin: 5px 0;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #0056b3;
+    }
+
+    .error-text {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .alert-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+    const 測試物件 = [
+      { name: '排骨飯', qty: 0, price: 100, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy9Ib0OMzM_hz_-X_jYMgHV5_TkqObmX8wFQ&s' },
+      { name: '陽春麵', qty: 0, price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY8gNLRZ5cmKF1euq1XWBCT_3-8Y9YCzac2g&s' },
+      { name: '雞腿飯', qty: 0, price: 140, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmNC7g80ocvAw1bhkvHRu8Li1YlUOfDNqT6A&s' },
+      { name: '燒肉飯', qty: 0, price: 80, image: 'https://tokyo-kitchen.icook.network/uploads/step/cover/855139/a934e79af2162ea3.jpg' }
+    ]
+    const App = () => {
+      const [meals, setMeals] = useState(測試物件);
+      const [loadingIndex, setLoadingIndex] = useState(null);
+      const [error, setError] = useState(null);
+
+      const 警告 = () => alert('警告按鈕寫成 function');
+
+      const handleClick = async (index) => {
+        try {
+          setLoadingIndex(index);
+          setError(null);
+
+          // 模擬非同步操作
+          await new Promise(resolve => setTimeout(resolve, 300));
+
+          //跑到index相同的才執行
+          setMeals(x =>
+            x.map((m, i) =>
+              i === index ? { ...m, qty: m.qty + 1 } : m
+            )
+          );
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
+        } finally {
+          setLoadingIndex(null);
+        }
+      };
+
+      return (
+        <div>
+          {/*寫註解的方法*/}
+          <h2>餐點清單</h2>
+          <div className="alert-buttons">
+            <button onClick={警告}>警告按鈕寫成 function</button>
+          </div>
+          <div className="alert-buttons">
+            <button onClick={() => alert('警告按鈕直接寫在裡面')}>警告按鈕直接寫在裡面</button>
+          </div>
+
+          {meals.map((meal, index) => (
+            <div key={index} className="meal-card">
+              <img src={meal.image} alt={meal.name} className="meal-image" />
+              <div className="meal-info">
+                <p>名稱：{meal.name}</p>
+                <p>價格：${meal.price}</p>
+                <p>數量：{meal.qty}</p>
+                <p>小計：${meal.price * meal.qty}</p>
+              </div>
+              <button
+                onClick={() => handleClick(index)}
+                disabled={loadingIndex === index}
+              >
+                {/* 點擊後loadingIndex會被設定，然後開始渲染時判斷index有一樣的會驅動*/}
+                {loadingIndex === index ? '讀取中...' : '加價 +1'}
+              </button>
+            </div>
+          ))}
+
+          {error && <p className="error-text">⚠️ {error}</p>}
+        </div>
+      );
+    };
+
+    //初始化 
+    ReactDOM.createRoot(document.querySelector('#root')).render(<App />);
+
+  </script>
+</body>
+
+</html>

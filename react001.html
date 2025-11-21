@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React 作品實戰班 01.基本語法</title>
+</head>
+<body>
+    <ul class="peoplelist"></ul>
+    <script>
+        //#####陣列解值#####
+        const colors = ['red', 'green', 'blue'];
+        const [x, y] = colors; //順序有關係，x取得第0，y取得第1
+        console.log(x, y); //red green
+
+        //#####物件解值#####
+        const user = {
+            name: 'Tom',
+            age: 99,
+            hobbies: '打球'
+        };
+        const { age, hobbies, name } = user; //順序沒關係欄位名稱對就好
+        console.log(age, name, hobbies); //99 'Tom' '打球'
+
+        //#####解構概念#####
+        function useState(init) {
+            let state = init;
+            return [state, function () { }];
+        }
+        const [count, setCount] = useState(1);
+        console.log(count, setCount);//, f{}
+
+        //#####擴展運算子 Spread Operator#####
+        const colorsArr = ['black', colors];
+        console.log(colorsArr); //會將陣列裡面塞陣列
+        const SpreadOperator = ['black', ...colors];
+        console.log(SpreadOperator);//['black', 'red', 'green', 'blue'] 會將變數展開在塞入
+
+        //#####陣列方法#####
+        const peoplelist = document.querySelector('.peoplelist');
+        const peoples = [
+            { name: '排骨飯', qty: 1, price: 10 },
+            { name: '陽春麵', qty: 2, price: 20 },
+            { name: '蛋糕', qty: 3, price: 30 }
+        ];
+
+        //forEach唯一沒有回傳值的陣列方法
+        //let html = '';      
+        //peoples.forEach(x => html += `<li>姓名${x.name},數量${x.qty},價格${x.price}</li>`);
+
+        //map
+        //1.會產生新的陣列
+        //2.新陣列長度與原始的相同
+        //3.箭頭函式跟傳統函式不一樣
+        //const html = peoples.map(x => `<li>姓名${x.name},數量${x.qty},價格${x.price}</li>`).join("");//沒有join會直接是原陣列數量的文字      
+        peoplelist.innerHTML = peoples.map(x => `<li>姓名${x.name},數量${x.qty},價格${x.price}</li>`).join("");//html;
+    </script>
+</body>
+</html>

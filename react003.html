@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React 作品實戰班 03.資料渲染 + 單筆 + useState</title>
+  <!-- React 和 ReactDOM（開發版本） -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel Standalone：讓瀏覽器即時編譯 JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+    //console.log(React);
+    //hook 概念需要什麼就取出來
+    //hook 取出React中useState方法
+    const { useState } = React;
+    const 測試物件 = { name: '排骨飯', qty: 1, price: 10, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy9Ib0OMzM_hz_-X_jYMgHV5_TkqObmX8wFQ&s' };
+
+    // function App() {
+    const App = () => {
+      //處理邏輯      
+      //[狀態, 寫入方法] = useState(初始化方法)
+      //初始化只有第一次套用
+      const [meal, setMeal] = useState(測試物件);
+      const [isLoading, setIsLoading] = useState(false); // isLoading 來驅動
+      const [error, setError] = useState(null);
+      //console.log(meal, Setmeal);
+
+      //async
+      const handleClick = () => {
+
+        try {
+          setIsLoading(true);
+          setError(null); // 清除舊錯誤
+
+          // 模擬非同步操作，例如 API 請求
+          // await new Promise((resolve, reject) => {
+          //   setTimeout(() => {
+          //     const isOk = Math.random() > 0.3; // 模擬成功/失敗
+          //     if (isOk) {
+          //       resolve();
+          //     } else {
+          //       reject(new Error("更新價格失敗！伺服器無回應。"));
+          //     }
+          //   }, 1000);
+          // });
+
+          // 成功 → 更新價格
+          setMeal(x => ({
+            ...x,
+            price: x.price + 1
+          }));
+        } catch (err) {
+          console.error("捕捉到錯誤：", err);
+          setError(err.message);
+        } finally {
+          // 無論成功或失敗都關閉 loading
+          setIsLoading(false);
+        }
+      };
+
+      //處理渲染  
+      return (
+        <div style={{ fontFamily: 'sans-serif', padding: '20px' }}>
+          <h3>餐點資訊</h3>
+          <p>名稱：{meal.name}</p>
+          <p>價格：{meal.price}</p>
+          <p>圖片：<img src={meal.image} /></p>
+          <button onClick={handleClick} disabled={isLoading}>
+            {isLoading ? '讀取中...' : '點我加價 +1'}
+          </button>
+
+          {error && (
+            <p style={{ color: 'red', marginTop: '10px' }}>⚠️ {error}</p>
+          )}
+        </div>
+      );
+    }
+
+    //初始化 
+    ReactDOM.createRoot(document.querySelector('#root')).render(<App />);
+
+  </script>
+</body>
+
+</html>

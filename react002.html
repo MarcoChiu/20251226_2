@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React 作品實戰班 02.JSX</title>
+  <!-- React 和 ReactDOM（開發版本） -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel Standalone：讓瀏覽器即時編譯 JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  1.Reack Hook (本次六角教學)
+  2.Rack Class componet
+  3.react 18是umd最後一個版本
+
+  4.JSX語法:
+  a.關注點分離
+  b.箭頭函式也可以用
+  c.元件通常都是用大寫開頭做命名(App)，用函式來宣告 
+  d.所有標籤都需要結尾 &lt;input /&gt; &lt;img /&gt;
+  e.JS屬性為小駝峰 colSpan className
+  f.checkbox defaultChecked
+  g.label htmlFor 
+  h.input text defaultValue  
+  i.select defaultValue
+  j.textarea defaultValue
+  k.style={{key:value}} 物件方式
+  l.註解 {/*  */}
+  m.最外層必須要一個元素包著&lt;div&gt;&lt;/div&gt; 或React.Fragment &lt;&gt; &lt;/&gt;
+
+
+
+  5.表達式:
+  a.有可能是單一個值，或是一句話，有回傳值就是表達式
+  b.所有函式執行都是表達式
+  c.const a = 1 ; 陳述式
+  d.0===0 表達式
+  e.a = 1 ; 表達式
+  f.渲染{}只能塞入表達式 {a = 1 } O , 塞個{const a = 1} X ;
+  g.三元運算表達式可以在{}用
+  <div id="root"></div>
+  <script type="text/babel">
+
+    const App = () => {
+      //處理邏輯
+      //function顯示
+      const test = () => <h3>test function</h3>;
+      //
+      const htmlTemplate = {
+        __html: `<h3 style="color:red;">dangerous InnerHTML </h3>`
+      }
+      const [peoples, setPeoples] = React.useState([
+        { name: '排骨飯', qty: 1, price: 10 ,remark:'1'},
+        { name: '陽春麵', qty: 2, price: 20 ,remark:'2'},
+        { name: '蛋糕', qty: 3, price: 30 ,remark:'3'}
+      ]);
+
+      const handleQtyChange = (index, newQty) => {
+        const updatedPeoples = [...peoples];
+        updatedPeoples[index].qty = parseInt(newQty);
+        setPeoples(updatedPeoples);
+      };
+
+      return (
+        <>
+          {test()}
+          <div dangerouslySetInnerHTML={htmlTemplate} />
+          <ul className="myclass">
+            {
+              peoples.map((item, index) => (
+                <li key={index}>
+                  {index + 1}.
+                  <input type="checkbox" defaultChecked />
+                  <label htmlFor={`name-${index}`}>姓名</label>
+                  <input type="text" id={`name-${index}`} defaultValue={item.name} readOnly />
+                  {item.price}x<select value={item.qty} onChange={(e) => handleQtyChange(index, e.target.value)}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select> = ${item.qty * item.price}
+                  <textarea cols="30" rows="5" style={{color: 'red', fontSize: '20px'}} defaultValue={item.remark}></textarea>
+                </li>
+              ))
+            }
+          </ul>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.querySelector('#root')).render(<App />);
+
+  </script>
+</body>
+
+</html>
+
+
+<!-- 
+用19就不能用JSX UDM只到18
+<div id="root"></div>
+    <script type="module">
+      import React from "https://esm.sh/react@19";
+      import { createRoot } from "https://esm.sh/react-dom@19/client";
+
+      function App() {
+        const [count, setCount] = React.useState(0);
+        return React.createElement(
+          "div",
+          { style: { textAlign: "center", marginTop: "50px" } },
+          React.createElement("h1", null, "React 19 ESM 模式 👋"),
+          React.createElement("p", null, `你點了 ${count} 次`),
+          React.createElement(
+            "button",
+            { onClick: () => setCount(count + 1) },
+            "點我"
+          )
+        );
+      }
+      const root = createRoot(document.getElementById("root"));
+      root.render(React.createElement(App));
+    </script> -->

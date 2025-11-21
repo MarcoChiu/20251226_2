@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+.yarn-debug.log*
+.yarn-error.log*
+.pnpm-debug.log*
+.vscode/
+.DS_Store
+Thumbs.db
+
+# mkcert local certificates
+localhost.pem
+localhost-key.pem
+
+#影音檔案
+files/
+ 

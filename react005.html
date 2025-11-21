@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React 作品實戰班 05.ESModule</title>
+  <!-- React 和 ReactDOM（開發版本） -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel Standalone：讓瀏覽器即時編譯 JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module">
+
+    //預設匯出
+    import obj from './react005.js';
+    obj.fn();
+
+    //具名匯出
+    import { fn } from './react005.js';
+    fn();
+
+    //全部匯出
+    import * as all from './react005.js';
+    all.fn();
+  </script>
+</body>
+
+</html>

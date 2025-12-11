@@ -1,0 +1,18 @@
+// https://getbootstrap.com/docs/5.3/customize/sass/
+// 切版班方式一樣客製化bootstrap
+
+//1.官網教學(固定)
+ @import 'bootstrap/scss/functions';
+ 
+//2-2.在自訂義一個
+//!default所以這邊有設定，下面scss變數會忽略
+@import './scss/customize';
+
+//2-1.將以下scss放到 /assets/scss/裡然後修改變數
+// node_modules/bootstrap/scss/_variables-dark.scss
+// node_modules/bootstrap/scss/_variables.scss
+@import './scss/variables';
+
+//3.官網教學(固定)
+@import 'bootstrap/scss/bootstrap';
+

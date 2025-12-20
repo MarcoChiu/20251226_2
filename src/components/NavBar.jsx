@@ -1,9 +1,9 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { routes } from '../routes';
+import NavItem from './NavItem';
 
 export default function NavBar() {
     console.log('NavBar rendered');
-    const location = useLocation();
 
     // 取得主要路由（根路由的子路由）
     const mainRoutes = routes[0].children;
@@ -26,10 +26,6 @@ export default function NavBar() {
 
     const navItems = getNavTree(mainRoutes);
 
-    const activeClass = ({ isActive }) => {
-        return `nav-link ${isActive ? "active" : ""}`;
-    }
-
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
@@ -39,50 +35,9 @@ export default function NavBar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                        {navItems.map((item, index) => {
-                            const hasChildren = item.children && item.children.length > 0;
-                            // 檢查當前路徑是否屬於此下拉選單
-                            const isChildActive = location.pathname.startsWith(item.path);
-
-                            return hasChildren ? (
-                                <li className="nav-item dropdown" key={index}>
-                                    <a
-                                        className={`nav-link dropdown-toggle ${isChildActive ? 'active' : ''}`}
-                                        href="#"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        {item.title}
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <NavLink className="dropdown-item" to={item.path} end>
-                                                {item.title}
-                                            </NavLink>
-                                        </li>
-                                        <li><hr className="dropdown-divider" /></li>
-                                        {item.children.map((child, childIdx) => (
-                                            <li key={childIdx}>
-                                                <NavLink className="dropdown-item" to={child.path}>
-                                                    {child.title}
-                                                </NavLink>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </li>
-                            ) : (
-                                <li className="nav-item" key={index}>
-                                    <NavLink
-                                        className={activeClass}
-                                        to={item.path}
-                                        style={item.path.includes('params') ? ({ isActive }) => { return { color: isActive ? 'green' : '', fontWeight: 'bold' } } : undefined}
-                                    >
-                                        {item.title}
-                                    </NavLink>
-                                </li>
-                            );
-                        })}
+                        {navItems.map((item, index) => (
+                            <NavItem key={index} item={item} />
+                        ))}
                     </ul>
                 </div>
             </div>

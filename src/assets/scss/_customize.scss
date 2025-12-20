@@ -1,13 +1,19 @@
-$primary:rgb(103, 195, 235);
+//下拉 active 
+$dropdown-link-active-bg: transparent;
+$dropdown-dark-link-active-bg: transparent;
+// $dropdown-link-active-color: #fff;
+// $dropdown-dark-link-hover-bg: rgba(255, 255, 255, 0.1);
+
 
 
 // 移除網頁四周空白
-html, body {
-  margin: 0;
-  padding: 0;
-}
+// html,
+// body {
+//   margin: 0;
+//   padding: 0;
+// }
 
-#root {
-  margin: 0;
-  padding: 0;
-}
+// #root {
+//   margin: 0;
+//   padding: 0;
+// }

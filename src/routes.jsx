@@ -27,15 +27,21 @@ export const routes = [
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
+        title: '首頁',
+        isShow: true
       },
       {
         path: 'about',
-        element: <About />
+        element: <About />,
+        title: '關於我',
+        isShow: true
       },
       {
         path: 'photo',
         element: <PhotoLayout />,
+        title: '相簿',
+        isShow: true,
         children: [
           {
             index: true,
@@ -43,27 +49,35 @@ export const routes = [
           },
           {
             path: 'detail',
+            isShow: false,
             element: <PhotoDetail />
           },
           {
             path: 'query',
-            element: <PhotoQuery />
+            element: <PhotoQuery />,
+            title: '查詢',
+            isShow: true,
           },
           {
             path: 'params',
-            element: <PhotoParams />
+            element: <PhotoParams />,
+            title: '路徑參數',
+            isShow: true
           },
           {
             path: 'params/:id',
-            element: <PhotoParams />
+            element: <PhotoParams />,
+            isShow: false,
           },
           {
             path: 'params/:id/:category',
-            element: <PhotoParams />
+            element: <PhotoParams />,
+            isShow: false,
           },
           {
             path: 'params/:id/:category/:name',
-            element: <PhotoParams />
+            element: <PhotoParams />,
+            isShow: false,
           }
         ]
       }

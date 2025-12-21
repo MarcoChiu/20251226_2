@@ -23,7 +23,7 @@ export function Layout() {
     if (matched) {
       // 取得最後一條匹配到的路由（最深層的子路由）
       const lastRoute = matched[matched.length - 1].route;
-      const title = lastRoute?.title || 'React班作業';
+      const title = lastRoute?.title || 'Marco作業';
       document.title = title;
     }
   }, [location]);
@@ -47,17 +47,17 @@ export const routes = [
         index: true,
         element: <Home />,
         title: '首頁',
-        isShow: false
+        isShow: true
       },
       {
         path: 'hw',
-        title: '作業2025 React 作品實戰冬季班',
+        title: '每堂作業',
         isShow: true,
         children: [
           {
             index: true,
             element: <Week1 />,
-            title: '第一週 - 從函式拆解認識設計模式',
+            title: '第一堂 - 從函式拆解認識設計模式',
             isShow: true
           }
         ]

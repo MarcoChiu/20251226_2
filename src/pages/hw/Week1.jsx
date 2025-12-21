@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import * as bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 
 export function Week1() {
     const [data, setData] = useState([]);
@@ -22,7 +22,7 @@ export function Week1() {
     }, []);
 
     useEffect(() => {
-        myModal.current = new bootstrap.Modal(modalRef.current);
+        myModal.current = new Modal(modalRef.current);
     }, []);
 
     const openModal = (product) => {

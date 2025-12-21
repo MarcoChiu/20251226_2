@@ -1,0 +1,1 @@
+import{j as e}from"./index-B3zEY-eN.js";const t=()=>e.jsxs("div",{className:"container mt-3",children:[e.jsx("h3",{className:"mt-4",children:"請新增 .env.development.local內容如下"}),e.jsx("p",{children:"VITE_APP_Path=/"})]});export{t as default};

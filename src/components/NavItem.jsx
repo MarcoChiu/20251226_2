@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Dropdown } from 'bootstrap';
 
- const NavItem = ({ item }) => {
+const NavItem = ({ item, onItemClick }) => {
     const location = useLocation();
     const hasChildren = item.children && item.children.length > 0;
     const isChildActive = location.pathname.startsWith(item.path);
@@ -22,7 +22,6 @@ import { Dropdown } from 'bootstrap';
                 className={`nav-link dropdown-toggle ${isChildActive ? 'active' : ''}`}
                 href="#"
                 role="button"
-                data-bs-toggle="dropdown"
                 aria-expanded="false"
                 onClick={toggleDropdown}
             >
@@ -39,6 +38,8 @@ import { Dropdown } from 'bootstrap';
                                 const toggleEl = e.target.closest('.dropdown').querySelector('.dropdown-toggle');
                                 const dropdown = Dropdown.getOrCreateInstance(toggleEl);
                                 dropdown.hide();
+                                // 呼叫父層傳入的關閉選單函式
+                                if (onItemClick) onItemClick();
                             }}
                         >
                             {child.title}
@@ -49,12 +50,11 @@ import { Dropdown } from 'bootstrap';
         </li>
     ) : (
         <li className="nav-item">
-            <NavLink className={activeClass} to={item.path}>
+            <NavLink className={activeClass} to={item.path} onClick={onItemClick}>
                 {item.title}
             </NavLink>
         </li>
     );
 }
 
- 
 export default NavItem;

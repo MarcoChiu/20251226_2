@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useMatches } from 'react-router-dom';
 import NavItem from './NavItem';
 import { routes } from '../routes';
 import { Collapse } from 'bootstrap';
 
 const NavBar = () => {
     const location = useLocation();
+    const matches = useMatches();
     const collapseRef = useRef(null);
 
     useEffect(() => {
@@ -16,7 +17,12 @@ const NavBar = () => {
             });
             bsCollapse.hide();
         }
-    }, [location]);
+
+        // 從目前的匹配路由中由後往前搜尋第一個具有 title 的路由
+        const currentMatchWithTitle = [...matches].reverse().find(m => m.handle?.title);
+        const title = currentMatchWithTitle?.handle?.title || 'Marco';
+        document.title = title;
+    }, [location, matches]);
 
     // 取得主要路由（根路由的子路由）
     const mainRoutes = routes[0].children;

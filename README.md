@@ -1,13 +1,3 @@
-.env.development.local
-```bash
-VITE_APP_Path=/
-```
-
-.env.production
-```bash
-VITE_APP_Path=/20251226_2/
-```
-
 axios
 ```bash
 npm install axios

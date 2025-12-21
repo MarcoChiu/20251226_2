@@ -1,6 +1,6 @@
 import { lazy } from 'react';
-import Layout  from './components/Layout';
- 
+import Layout from './components/Layout';
+
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -11,10 +11,22 @@ const PhotoQuery = lazy(() => import('./pages/photo/PhotoQuery'));
 const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
 const Week1 = lazy(() => import('./pages/hw/Week1'));
 
-export const routes = [
+// 輔助函式：遞迴將 title 放入 handle 中，讓 useMatches 可以讀取到
+const transformRoutes = (routeList) => {
+  return routeList.map(route => ({
+    ...route,
+    handle: {
+      ...route.handle,
+      title: route.title
+    },
+    children: route.children ? transformRoutes(route.children) : undefined
+  }));
+};
+
+export const routes = transformRoutes([
   {
     path: '/',
-    element: <Layout />,    
+    element: <Layout />,
     children: [
       {
         index: true,
@@ -93,4 +105,4 @@ export const routes = [
       }
     ]
   }
-];
+]);

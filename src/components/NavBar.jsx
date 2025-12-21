@@ -37,7 +37,8 @@ const NavBar = () => {
 
                 return {
                     path: currentPath,
-                    title: route.title,
+                    title: route.handle?.title || route.title,
+
                     children: visibleChildren
                 };
             });

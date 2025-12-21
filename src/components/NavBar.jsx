@@ -3,7 +3,7 @@ import { routes } from '../routes';
 import NavItem from './NavItem';
 
 export default function NavBar() {
-    console.log('NavBar rendered');
+    //console.log('NavBar rendered');
 
     // 取得主要路由（根路由的子路由）
     const mainRoutes = routes[0].children;

@@ -3,11 +3,16 @@ import { Outlet, useLocation, matchRoutes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
+//Router練習
 import { PhotoLayout } from './pages/photo/PhotoLayout';
 import { PhotoIndex } from './pages/photo/PhotoIndex';
 import { PhotoDetail } from './pages/photo/PhotoDetail';
 import { PhotoQuery } from './pages/photo/PhotoQuery';
 import { PhotoParams } from './pages/photo/PhotoParams';
+//作業區
+import { Week1 } from './pages/hw/Week1';
+
+
 
 // Layout 元件包含 NavBar
 export function Layout() {
@@ -42,19 +47,32 @@ export const routes = [
         index: true,
         element: <Home />,
         title: '首頁',
-        isShow: true
+        isShow: false
+      },
+      {
+        path: 'hw',
+        title: '作業2025 React 作品實戰冬季班',
+        isShow: true,
+        children: [
+          {
+            index: true,
+            element: <Week1 />,
+            title: '第一週 - 從函式拆解認識設計模式',
+            isShow: true
+          }
+        ]
       },
       {
         path: 'about',
         element: <About />,
         title: '關於我',
-        isShow: true
+        isShow: false
       },
       {
         path: 'photo',
         element: <PhotoLayout />,
         title: '相簿',
-        isShow: true,
+        isShow: false,
         children: [
           {
             index: true,

@@ -10,7 +10,7 @@ const Loading = () => {
                     <div className="spinner-ring"></div>
                     <div className="spinner-ring"></div>
                 </div>
-                <p className="loading-text">載入中...</p>
+                <p className="loading-text">Loading...</p>
             </div>
         </div>
     );

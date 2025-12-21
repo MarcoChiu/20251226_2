@@ -1,9 +1,14 @@
 .loading-container {
+    /* full-screen overlay */
+    position: fixed;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 400px;
     width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45); /* 半透明背景 */
+    z-index: 1050;
 }
 
 .loading-content {
@@ -24,7 +29,7 @@
     width: 100%;
     height: 100%;
     border: 4px solid transparent;
-    border-top-color: #f979a3;
+    border-top-color: #6acee0;
     border-radius: 50%;
     animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
 }

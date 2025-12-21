@@ -42,3 +42,13 @@ gh-pages
 ```bash
 npm i gh-pages
 ```
+
+六角API申請
+```bash
+https://ec-course-api.hexschool.io/
+```
+
+六角API文件
+```bash
+https://hexschool.github.io/ec-courses-api-swaggerDoc/#/
+```

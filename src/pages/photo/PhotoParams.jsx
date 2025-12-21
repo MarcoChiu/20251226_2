@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 
-export   function PhotoParams() {
+const PhotoParams = () => {
     // 使用 useParams 取得 URL 參數
     const params = useParams();
     const { id, category, name } = params;
@@ -161,3 +161,6 @@ export   function PhotoParams() {
         </div>
     );
 }
+
+
+export default PhotoParams;

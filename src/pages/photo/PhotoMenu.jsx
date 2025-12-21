@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export   function PhotoMenu({ onSearch, loading, error, remainingCalls }) {
+const PhotoMenu = ({ onSearch, loading, error, remainingCalls }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearch = (e) => {
@@ -17,19 +17,19 @@ export   function PhotoMenu({ onSearch, loading, error, remainingCalls }) {
     return (
         <div>
             <h4>搜尋照片</h4>
-            
+
             <form onSubmit={handleSearch} className="mb-3">
                 <div className="input-group">
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="輸入搜尋關鍵字 (至少3個字)" 
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="輸入搜尋關鍵字 (至少3個字)"
                         value={searchTerm}
                         onChange={handleInputChange}
                         disabled={loading}
                     />
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="btn btn-primary"
                         disabled={loading || searchTerm.length < 3}
                     >
@@ -46,7 +46,7 @@ export   function PhotoMenu({ onSearch, loading, error, remainingCalls }) {
                     剩餘 API 呼叫次數: {remainingCalls}
                 </div>
             )}
-            
+
             {error && (
                 <div className="alert alert-danger" role="alert">
                     {error}
@@ -55,3 +55,4 @@ export   function PhotoMenu({ onSearch, loading, error, remainingCalls }) {
         </div>
     )
 }
+export default PhotoMenu;

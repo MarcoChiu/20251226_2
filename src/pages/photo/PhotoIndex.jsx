@@ -1,4 +1,4 @@
-export   function PhotoIndex() {
+const PhotoIndex = () => {
     return (
         <div className="card">
             <div className="card-body">
@@ -23,7 +23,7 @@ export   function PhotoIndex() {
                         <p className="mb-0 text-muted">Unsplash API 有呼叫次數限制，請注意剩餘次數提示</p>
                     </li>
                 </ul>
-                
+
                 <div className="alert alert-info" role="alert">
                     <strong>提示：</strong>您可以搜尋任何主題，例如：nature、cat、mountain、ocean 等
                 </div>
@@ -35,3 +35,6 @@ export   function PhotoIndex() {
         </div>
     );
 }
+
+
+export default PhotoIndex;

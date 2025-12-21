@@ -1,8 +1,8 @@
 import { useSearchParams, Link } from 'react-router-dom';
 
-export  function PhotoQuery() {
+const PhotoQuery = () => {
     const [searchParams] = useSearchParams();
-    
+
     // 從 URL 取得參數
     const id = searchParams.get('id') || '';
     const category = searchParams.get('category') || '';
@@ -170,3 +170,6 @@ export  function PhotoQuery() {
         </div>
     );
 }
+
+
+export default PhotoQuery;

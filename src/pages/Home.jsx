@@ -1,4 +1,4 @@
-export function Home() {
+const Home = () => {
     //console.log('Home rendered');
     return (
         <div className="container mt-3">
@@ -11,3 +11,5 @@ export function Home() {
         </div>
     )
 }
+
+export default Home;

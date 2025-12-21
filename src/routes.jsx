@@ -1,47 +1,20 @@
-import { useEffect } from 'react';
-import { Outlet, useLocation, matchRoutes } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-//Router練習
-import { PhotoLayout } from './pages/photo/PhotoLayout';
-import { PhotoIndex } from './pages/photo/PhotoIndex';
-import { PhotoDetail } from './pages/photo/PhotoDetail';
-import { PhotoQuery } from './pages/photo/PhotoQuery';
-import { PhotoParams } from './pages/photo/PhotoParams';
-//作業區
-import { Week1 } from './pages/hw/Week1';
+import { lazy } from 'react';
+import Layout  from './components/Layout';
+ 
 
-
-
-// Layout 元件包含 NavBar
-export function Layout() {
-  const location = useLocation();
-
-  useEffect(() => {
-    const matched = matchRoutes(routes, location);
-    if (matched) {
-      // 取得最後一條匹配到的路由（最深層的子路由）
-      const lastRoute = matched[matched.length - 1].route;
-      const title = lastRoute?.title || 'Marco作業';
-      document.title = title;
-    }
-  }, [location]);
-
-  return (
-    <>
-      <NavBar />
-      <div className='App'>
-        <Outlet />
-      </div>
-    </>
-  );
-}
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const PhotoLayout = lazy(() => import('./pages/photo/PhotoLayout'));
+const PhotoIndex = lazy(() => import('./pages/photo/PhotoIndex'));
+const PhotoDetail = lazy(() => import('./pages/photo/PhotoDetail'));
+const PhotoQuery = lazy(() => import('./pages/photo/PhotoQuery'));
+const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
+const Week1 = lazy(() => import('./pages/hw/Week1'));
 
 export const routes = [
   {
     path: '/',
-    element: <Layout />,
+    element: <Layout />,    
     children: [
       {
         index: true,
@@ -72,7 +45,7 @@ export const routes = [
         path: 'photo',
         element: <PhotoLayout />,
         title: '相簿',
-        isShow: false,
+        isShow: true,
         children: [
           {
             index: true,

@@ -1,12 +1,12 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PhotoMenu } from './PhotoMenu.jsx';
+import PhotoMenu from './PhotoMenu.jsx';
 
 const api = 'https://api.unsplash.com/search/photos/';
 const accessKey = 'Mjilp2VDqxCTCbkq9e6_1NA_43BXd60uD2T56bNMXV8';
 
-export function PhotoLayout() {
+const PhotoLayout = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -66,3 +66,5 @@ export function PhotoLayout() {
         </div>
     )
 }
+
+export default PhotoLayout;

@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import { routes } from '../routes';
 import NavItem from './NavItem';
+import { routes } from '../routes';
 
-export default function NavBar() {
+const NavBar = () => {
     //console.log('NavBar rendered');
 
     // 取得主要路由（根路由的子路由）
@@ -44,3 +44,5 @@ export default function NavBar() {
         </nav>
     )
 }
+
+export default NavBar;

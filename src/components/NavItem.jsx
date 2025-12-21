@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Dropdown } from 'bootstrap';
 
-export default function NavItem({ item }) {
+ const NavItem = ({ item }) => {
     const location = useLocation();
     const hasChildren = item.children && item.children.length > 0;
     const isChildActive = location.pathname.startsWith(item.path);
@@ -55,3 +55,6 @@ export default function NavItem({ item }) {
         </li>
     );
 }
+
+ 
+export default NavItem;

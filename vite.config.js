@@ -3,16 +3,22 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // 載入環境變數VITE_開頭的
-  const env = loadEnv(mode, process.cwd(), 'VITE_')
-
+  const isProduction = mode === 'production';
+  //不使用.env檔案，直接在此設定
+  const basePath = isProduction ? '/20251226_2/' : '/';
+  const apiBaseUrl = 'https://ec-course-api.hexschool.io/v2'; 
+  const myBasePath ='marcochiu';   
   return {
-    // 辨識本地端或是 GitHub Pages 上的路徑
-    base: env.VITE_APP_Path || '/',
     plugins: [react()],
-    // HTTPS 需搭配 mkcert localhost
+    base: basePath,
+    define: {
+      'import.meta.env.BASE_PATH': JSON.stringify(basePath.replace(/\/$/, '')),
+      'import.meta.env.API_BASE_URL': JSON.stringify(apiBaseUrl),
+      'import.meta.env.MY_PATH': JSON.stringify(myBasePath),       
+    },
     server: {
-      port: 5173
+      port: 5000
     }
   }
 })
+

@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 
-export   function PhotoDetail() {
+const PhotoDetail = () => {
     const { photos, loading, error } = useOutletContext();
 
     if (loading) {
@@ -36,9 +36,9 @@ export   function PhotoDetail() {
                 {photos.map((photo) => (
                     <div key={photo.id} className="col-md-6 mb-4">
                         <div className="card">
-                            <img 
-                                src={photo.urls.small} 
-                                className="card-img-top" 
+                            <img
+                                src={photo.urls.small}
+                                className="card-img-top"
                                 alt={photo.alt_description || 'Photo'}
                             />
                             <div className="card-body">
@@ -50,9 +50,9 @@ export   function PhotoDetail() {
                                         攝影師: {photo.user.name}
                                     </small>
                                 </p>
-                                <a 
-                                    href={photo.links.html} 
-                                    target="_blank" 
+                                <a
+                                    href={photo.links.html}
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="btn btn-sm btn-outline-primary"
                                 >
@@ -66,3 +66,5 @@ export   function PhotoDetail() {
         </div>
     );
 }
+
+export default PhotoDetail;

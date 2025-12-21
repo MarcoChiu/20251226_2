@@ -1,4 +1,4 @@
-export function About() {
+const About = () => {
     //console.log('About rendered');
     return (
         <div className="container mt-3">
@@ -7,3 +7,5 @@ export function About() {
         </div>
     )
 }
+
+export default About;

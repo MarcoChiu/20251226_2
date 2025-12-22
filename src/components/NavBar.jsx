@@ -6,7 +6,7 @@ import { Collapse, Dropdown } from 'bootstrap';
 const NavItem = ({ item, onItemClick }) => {
     const location = useLocation();
     const hasChildren = item.children && item.children.length > 0;
-    const isChildActive = location.pathname.startsWith(item.path);
+    const isChildActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
 
     const toggleDropdown = (e) => {
         e.preventDefault();
@@ -73,7 +73,7 @@ const NavBar = () => {
         }
 
         // 更新 document.title
-        const baseTitle = 'Marco'; //  
+        const baseTitle = 'React'; //  
 
         // 使用 matchRoutes 來比對目前的 routes 設定，這樣可以確保取得自定義的 title 屬性
         const matches = matchRoutes(routes, location);

@@ -1,7 +1,7 @@
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { routes } from './routes';
 
-export const App = () => {
+const App = () => {
   return (
     <RouterProvider router={createHashRouter(routes)} />
   )

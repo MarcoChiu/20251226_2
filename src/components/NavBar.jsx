@@ -1,12 +1,66 @@
 import { useEffect, useRef } from 'react';
-import { NavLink, useLocation, useMatches } from 'react-router-dom';
-import NavItem from './NavItem';
+import { NavLink, useLocation, matchRoutes } from 'react-router-dom';
 import { routes } from '../routes';
-import { Collapse } from 'bootstrap';
+import { Collapse, Dropdown } from 'bootstrap';
+
+const NavItem = ({ item, onItemClick }) => {
+    const location = useLocation();
+    const hasChildren = item.children && item.children.length > 0;
+    const isChildActive = location.pathname.startsWith(item.path);
+
+    const toggleDropdown = (e) => {
+        e.preventDefault();
+        const dropdown = Dropdown.getOrCreateInstance(e.currentTarget);
+        dropdown.toggle();
+    };
+
+    const activeClass = ({ isActive }) => {
+        return `nav-link ${isActive ? "active" : ""}`;
+    };
+
+    return hasChildren ? (
+        <li className="nav-item dropdown">
+            <a
+                className={`nav-link dropdown-toggle ${isChildActive ? 'active' : ''}`}
+                href="#"
+                role="button"
+                aria-expanded="false"
+                onClick={toggleDropdown}
+            >
+                {item.title}
+            </a>
+            <ul className="dropdown-menu">
+                {item.children.map((child, childIdx) => (
+                    <li key={childIdx}>
+                        <NavLink
+                            className="dropdown-item"
+                            to={child.path}
+                            onClick={(e) => {
+                                // 取得父層的 dropdown 並隱藏
+                                const toggleEl = e.target.closest('.dropdown').querySelector('.dropdown-toggle');
+                                const dropdown = Dropdown.getOrCreateInstance(toggleEl);
+                                dropdown.hide();
+                                // 呼叫父層傳入的關閉選單函式
+                                if (onItemClick) onItemClick();
+                            }}
+                        >
+                            {child.title}
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+        </li>
+    ) : (
+        <li className="nav-item">
+            <NavLink className={activeClass} to={item.path} onClick={onItemClick}>
+                {item.title}
+            </NavLink>
+        </li>
+    );
+}
 
 const NavBar = () => {
     const location = useLocation();
-    const matches = useMatches();
     const collapseRef = useRef(null);
 
     useEffect(() => {
@@ -18,11 +72,28 @@ const NavBar = () => {
             bsCollapse.hide();
         }
 
-        // 從目前的匹配路由中由後往前搜尋第一個具有 title 的路由
-        const currentMatchWithTitle = [...matches].reverse().find(m => m.handle?.title);
-        const title = currentMatchWithTitle?.handle?.title || 'Marco';
-        document.title = title;
-    }, [location, matches]);
+        // 更新 document.title
+        const baseTitle = 'Marco'; //  
+
+        // 使用 matchRoutes 來比對目前的 routes 設定，這樣可以確保取得自定義的 title 屬性
+        const matches = matchRoutes(routes, location);
+
+        let title = '';
+        if (matches) {
+            const currentMatch = [...matches].reverse().find(match => match.route?.title);
+            title = currentMatch?.route?.title;
+        }
+
+        if (title) {
+            document.title = `${title} - ${baseTitle}`;
+        } else {
+            document.title = baseTitle;
+        }
+
+        // 記錄瀏覽
+        // ... (保留原本註解的紀錄邏輯)
+
+    }, [location]);
 
     // 取得主要路由（根路由的子路由）
     const mainRoutes = routes[0].children;
@@ -37,7 +108,7 @@ const NavBar = () => {
 
                 return {
                     path: currentPath,
-                    title: route.handle?.title || route.title,
+                    title: route.title,
 
                     children: visibleChildren
                 };

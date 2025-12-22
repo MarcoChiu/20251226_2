@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
 import Loading from './Loading';
 
-// Layout 元件包含 NavBar
 const Layout = () => {
     return (
         <>

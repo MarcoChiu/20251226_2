@@ -1,3 +1,8 @@
+React
+```bash
+npm create vite@latest
+```
+
 axios
 ```bash
 npm install axios

@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.MY_PATH': JSON.stringify(myBasePath),       
     },
     server: {
-      port: 5000
+      port: 5001
     }
   }
 })

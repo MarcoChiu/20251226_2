@@ -3,7 +3,7 @@ const Home = () => {
     return (
         <div className="container mt-3">
 
-            <h3 className="mt-4">這是首頁</h3>
+            <h3 className="mt-4">這是首頁Ya!</h3>
             <p>
 
             </p>

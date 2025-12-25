@@ -3,6 +3,11 @@ React
 npm create vite@latest
 ```
 
+scss
+```bash
+npm add -D sass
+```
+
 axios
 ```bash
 npm install axios

@@ -10,8 +10,6 @@ const Week1 = () => {
     const modalRef = useRef(null);
     const myModal = useRef(null);
 
-
-
     useEffect(() => {
         (async () => {
             try {
@@ -120,7 +118,7 @@ const Week1 = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 

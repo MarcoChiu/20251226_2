@@ -4,7 +4,7 @@ import { routes } from './routes';
 const App = () => {
   return (
     <RouterProvider router={createHashRouter(routes)} />
-  )
+  );
 }
 
 export default App;

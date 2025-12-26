@@ -5,7 +5,7 @@ const About = () => {
             <h3 className="mt-4">About Page</h3>
             <p>Welcome to the About Page!</p>
         </div>
-    )
+    );
 }
 
 export default About;

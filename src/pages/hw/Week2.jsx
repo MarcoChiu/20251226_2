@@ -117,6 +117,6 @@ const Week2 = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 export default Week2;

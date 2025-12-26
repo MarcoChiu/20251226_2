@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-//import { API_ENDPOINTS } from '../../config.jsx';
 
 const Week1 = () => {
     const [data, setData] = useState([]);
@@ -18,10 +17,6 @@ const Week1 = () => {
             try {
                 const response = await axios.get(`${path}data/week1.json`);
                 setData(response.data[0]);
-
-                // console.log(API_ENDPOINTS?.products ?? 'API_ENDPOINTS.products 未設定');
-                // const checkProduct = await axios.get(API_ENDPOINTS?.products );
-                // console.log('API 回傳資料：', checkProduct.data);
             } catch (error) {
                 console.error('Error loading data:', error);
             }

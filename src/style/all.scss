@@ -2,8 +2,8 @@
 // 切版班方式一樣客製化bootstrap
 
 //1.官網教學(固定)
- @import 'bootstrap/scss/functions';
- 
+@import 'bootstrap/scss/functions';
+
 //2-2.在自訂義一個
 //!default所以這邊有設定，下面scss變數會忽略
 @import './scss/customize';
@@ -16,3 +16,5 @@
 //3.官網教學(固定)
 @import 'bootstrap/scss/bootstrap';
 
+//4.自訂義
+@import './scss/loading';

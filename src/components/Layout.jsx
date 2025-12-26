@@ -7,11 +7,10 @@ const Layout = () => {
     return (
         <>
             <NavBar />
-            <div className='App'>
-                <Suspense fallback={<Loading />}>
-                    <Outlet />
-                </Suspense>
-            </div>
+            <Suspense fallback={<Loading />}>
+                <Outlet />
+            </Suspense>
+
         </>
     );
 }

@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { NavLink, useLocation, matchRoutes } from 'react-router-dom';
+import { NavLink, useLocation, matchRoutes, useNavigate } from 'react-router-dom';
 import { routes } from '../routes';
 import { Collapse, Dropdown } from 'bootstrap';
+import { useAuth } from '../contexts/AuthContext';
 
 const NavItem = ({ item, onItemClick }) => {
     const location = useLocation();
@@ -61,7 +62,9 @@ const NavItem = ({ item, onItemClick }) => {
 
 const NavBar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const collapseRef = useRef(null);
+    const { isAuth, logout } = useAuth(); // 使用 Context
 
     useEffect(() => {
         const collapseEl = collapseRef.current;
@@ -73,7 +76,7 @@ const NavBar = () => {
         }
 
         // 更新 document.title
-        const baseTitle = 'React'; //  
+        const baseTitle = 'Marco';
 
         // 使用 matchRoutes 來比對目前的 routes 設定，這樣可以確保取得自定義的 title 屬性
         const matches = matchRoutes(routes, location);
@@ -90,9 +93,6 @@ const NavBar = () => {
             document.title = baseTitle;
         }
 
-        // 記錄瀏覽
-        // ... (保留原本註解的紀錄邏輯)
-
     }, [location]);
 
     // 取得主要路由（根路由的子路由）
@@ -100,19 +100,30 @@ const NavBar = () => {
 
     // 遞迴獲取結構化的顯示路由
     const getNavTree = (routeList, parentPath = '') => {
-        return routeList
-            .filter(route => route.isShow)
-            .map(route => {
+        let result = [];
+
+        routeList.forEach(route => {
+            // 如果路由設定為顯示
+            if (route.isShow) {
                 const currentPath = route.index ? parentPath : `${parentPath}/${route.path}`.replace(/\/+/g, '/');
                 const visibleChildren = route.children ? getNavTree(route.children, currentPath) : [];
 
-                return {
+                result.push({
                     path: currentPath,
                     title: route.title,
-
                     children: visibleChildren
-                };
-            });
+                });
+            }
+            // 如果路由是不顯示（或是像 AuthLayout 這種 wrapper）但有子路由
+            // 且該路由沒有 path 屬性（表示它是 pathless layout route）
+            // 我們就應該穿透它去抓取下面的子路由
+            else if (!route.path && route.children) {
+                const childItems = getNavTree(route.children, parentPath);
+                result.push(...childItems);
+            }
+        });
+
+        return result;
     };
 
     const navItems = getNavTree(mainRoutes);
@@ -131,6 +142,13 @@ const NavBar = () => {
             const bsCollapse = Collapse.getOrCreateInstance(collapseEl);
             bsCollapse.hide();
         }
+    };
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
+        navigate('/');
+        closeCollapse();
     };
 
     return (
@@ -152,6 +170,15 @@ const NavBar = () => {
                         {navItems.map((item, index) => (
                             <NavItem key={index} item={item} onItemClick={closeCollapse} />
                         ))}
+                    </ul>
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            {isAuth ? (
+                                <a className="nav-link" href="#" onClick={handleLogout}>登出</a>
+                            ) : (
+                                <NavLink className="nav-link" to="/login" onClick={closeCollapse}>登入</NavLink>
+                            )}
+                        </li>
                     </ul>
                 </div>
             </div>

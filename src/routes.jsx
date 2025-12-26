@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import Layout from './components/Layout';
+import { transformRoutes } from './utils/routerUtils';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -9,35 +10,41 @@ const PhotoDetail = lazy(() => import('./pages/photo/PhotoDetail'));
 const PhotoQuery = lazy(() => import('./pages/photo/PhotoQuery'));
 const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
 const Week1 = lazy(() => import('./pages/hw/Week1'));
+const Week2 = lazy(() => import('./pages/hw/Week2'));
+const Login = lazy(() => import('./pages/Login'));
 
-export const routes = [
+const routesConfig = [
   {
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <Home />, title: '首頁', isShow: true, },
+      { index: true, element: <Home />, title: '首頁', isShow: true },
+      { path: 'about', element: <About />, title: '關於我', isShow: false },
       {
-        path: 'hw', title: '每堂作業', isShow: true, children: [
-          {
-            index: true, element: <Week1 />, title: '第一堂 - 從函式拆解認識設計模式', isShow: true,
-          },
-        ],
+        path: 'hw', title: '每堂作業', isShow: true, children:
+          [
+            { index: true, element: <Week1 />, title: '第一堂 - 從函式拆解認識設計模式', isShow: true },
+            { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
+          ],
       },
+
       {
-        path: 'about', element: <About />, title: '關於我', isShow: false,
-      },
-      {
-        path: 'photo', element: <PhotoLayout />, title: '相簿', isShow: true,
+        path: 'photo', element: <PhotoLayout />, title: '相簿', isShow: true, isAuth: true,
         children: [
-          { index: true, element: <PhotoIndex />, title: '歡迎使用照片搜尋系統', isShow: true, },
-          { path: 'detail', element: <PhotoDetail />, title: '照片詳情', isShow: false, },
-          { path: 'query', element: <PhotoQuery />, title: 'Query String 測試頁面', isShow: true, },
-          { path: 'params', element: <PhotoParams />, title: 'URL Params 測試頁面', isShow: true, },
-          { path: 'params/:id', element: <PhotoParams />, title: '參數詳情', isShow: false, },
-          { path: 'params/:id/:category', element: <PhotoParams />, title: '參數詳情', isShow: false, },
-          { path: 'params/:id/:category/:name', element: <PhotoParams />, title: '參數詳情', isShow: false, },
+          { index: true, element: <PhotoIndex />, title: '歡迎使用照片搜尋系統', isShow: true },
+          { path: 'detail', element: <PhotoDetail />, title: '照片詳情', isShow: false },
+          { path: 'query', element: <PhotoQuery />, title: 'Query String 測試頁面', isShow: true },
+          { path: 'params', element: <PhotoParams />, title: 'URL Params 測試頁面', isShow: true },
+          { path: 'params/:id', element: <PhotoParams />, title: '參數詳情', isShow: false },
+          { path: 'params/:id/:category', element: <PhotoParams />, title: '參數詳情', isShow: false },
+          { path: 'params/:id/:category/:name', element: <PhotoParams />, title: '參數詳情', isShow: false },
         ],
+      },
+      {
+        path: 'login', element: <Login />, title: '登入', isShow: false,
       },
     ],
   },
 ];
+
+export const routes = transformRoutes(routesConfig);

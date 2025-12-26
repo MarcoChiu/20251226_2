@@ -62,7 +62,7 @@ const Login = () => {
                                         className="form-control"
                                         id="email"
                                         name="email"
-                                        placeholder="name@example.com"
+                                        placeholder="請輸入email name@example.com"
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
@@ -77,7 +77,7 @@ const Login = () => {
                                         className="form-control"
                                         id="password"
                                         name="password"
-                                        placeholder="Enter your password"
+                                        placeholder="請輸入密碼"
                                         value={formData.password}
                                         onChange={handleChange}
                                         required

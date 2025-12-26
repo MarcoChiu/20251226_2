@@ -3,7 +3,7 @@ const Home = () => {
     return (
         <div className="container mt-3">
 
-            <h3 className="mt-4">這是首頁Ya!</h3>
+            <h3 className="mt-4">請選擇上方選單每堂作業</h3>
             <p>
 
             </p>

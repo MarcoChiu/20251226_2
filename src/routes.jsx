@@ -27,7 +27,6 @@ const routesConfig = [
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
           ],
       },
-
       {
         path: 'photo', element: <PhotoLayout />, title: '相簿', isShow: true, isAuth: true,
         children: [

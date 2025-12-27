@@ -3,6 +3,11 @@ React
 npm create vite@latest
 ```
 
+gh-pages
+```bash
+npm i gh-pages
+```
+
 scss
 ```bash
 npm add -D sass
@@ -38,11 +43,10 @@ react-router-dom
 npm i react-router-dom
 ```
 
-gh-pages
+ sweetalert2
 ```bash
-npm i gh-pages
+npm install sweetalert2
 ```
-
 六角API申請
 ```bash
 https://ec-course-api.hexschool.io/

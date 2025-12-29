@@ -53,6 +53,7 @@ const Week1 = () => {
                                     className="card-img-top"
                                     alt={item.title}
                                     style={{ maxHeight: "350px", objectFit: "cover" }}
+                                    loading="lazy"
                                 />
                                 <div className="card-body d-flex flex-column">
                                     <div className="flex-grow-1">

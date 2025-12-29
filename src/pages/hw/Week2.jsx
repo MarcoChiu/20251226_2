@@ -51,6 +51,7 @@ const Week2 = () => {
                                 className="card-img-top"
                                 alt={item.title}
                                 style={{ maxHeight: "350px", objectFit: "cover" }}
+                                loading="lazy"
                             />
                             <div className="card-body d-flex flex-column">
                                 <div className="flex-grow-1">
@@ -105,6 +106,7 @@ const Week2 = () => {
                                                         className="img-fluid rounded shadow-sm"
                                                         style={{ width: "100px", height: "100px", objectFit: "cover" }}
                                                         alt={`${tempProduct.title}-${index}`}
+                                                        loading="lazy"
                                                     />
                                                 ))}
                                             </div>

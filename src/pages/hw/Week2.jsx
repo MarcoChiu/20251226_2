@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import { API_ENDPOINTS } from "../../apiConfig";
+import Swal from 'sweetalert2';
 
 const Week2 = () => {
     const [products, setProducts] = useState([]);
@@ -15,16 +16,18 @@ const Week2 = () => {
     }, []);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        (async () => {
             try {
                 const response = await axios.get(API_ENDPOINTS.adminProducts);
                 setProducts(response.data.products);
             } catch (error) {
-                console.error('Error loading products:', error);
-                alert('取得產品失敗');
+                Swal.fire({
+                    icon: 'error',
+                    title: '取得產品失敗',
+                    text: error.response?.data?.message || '發生錯誤'
+                });
             }
-        };
-        fetchProducts();
+        })();
     }, []);
 
     const openModal = (product) => {

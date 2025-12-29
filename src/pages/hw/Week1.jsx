@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
+import Swal from 'sweetalert2';
 
 const Week1 = () => {
     const [data, setData] = useState([]);
@@ -14,9 +15,13 @@ const Week1 = () => {
         (async () => {
             try {
                 const response = await axios.get(`${path}data/week1.json`);
-                setData(response.data[0]);
+                setData(response.data);
             } catch (error) {
-                console.error('Error loading data:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '取得產品失敗',
+                    text: error || '發生錯誤'
+                });
             }
         })();
     }, []);

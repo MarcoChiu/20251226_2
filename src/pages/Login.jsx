@@ -50,7 +50,7 @@ const Login = () => {
             }
 
         } catch (error) {
-            console.error('Login failed:', error);
+            //console.error('Login failed:', error);
             Swal.fire({
                 icon: 'error',
                 title: '登入失敗',

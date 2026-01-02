@@ -23,7 +23,7 @@ const Week3 = () => {
     const [pageInfo, setPageInfo] = useState({});
     const [tempProduct, setTempProduct] = useState(defaultProduct);
     const [isNew, setIsNew] = useState(false);
-    const [isGenerating, setIsGenerating] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const productModalRef = useRef(null);
     const deleteModalRef = useRef(null);
     const productModal = useRef(null);
@@ -37,6 +37,7 @@ const Week3 = () => {
 
     //API
     const getProducts = async (page = 1) => {
+        setIsLoading(true);
         try {
             const res = await axios.get(API_ENDPOINTS.adminProduct + 's', {
                 params: { page }
@@ -45,10 +46,13 @@ const Week3 = () => {
             setPageInfo(res.data.pagination);
         } catch (error) {
             alert("取得產品失敗");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const createProduct = async () => {
+        setIsLoading(true);
         try {
             const payload = {
                 data: {
@@ -60,7 +64,7 @@ const Week3 = () => {
 
             await axios.post(API_ENDPOINTS.adminProduct, payload);
             closeProductModal();
-            getProducts(pageInfo.current_page);
+            await getProducts(pageInfo.current_page);
             Swal.fire({ icon: 'success', title: '新增成功' });
         } catch (error) {
             Swal.fire({
@@ -68,11 +72,13 @@ const Week3 = () => {
                 title: '新增失敗',
                 text: error.response?.data?.message || '發生錯誤'
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const fakeProducts = async () => {
-        setIsGenerating(true);
+        setIsLoading(true);
         try {
             const categories = ["電子產品", "衣服", "書籍", "家具", "玩具"];
             const adjectives = ["超級", "精緻", "豪華", "實用", "時尚", "復古", "智能", "環保", "限量", "經典"];
@@ -108,7 +114,7 @@ const Week3 = () => {
                 }
             }
 
-            getProducts(pageInfo.current_page);
+            await getProducts(pageInfo.current_page);
             Swal.fire({
                 icon: 'success',
                 title: '假資料建立完成',
@@ -122,11 +128,12 @@ const Week3 = () => {
                 text: error.message || '發生錯誤'
             });
         } finally {
-            setIsGenerating(false);
+            setIsLoading(false);
         }
     };
 
     const updateProduct = async () => {
+        setIsLoading(true);
         try {
             const payload = {
                 data: {
@@ -138,7 +145,7 @@ const Week3 = () => {
 
             await axios.put(`${API_ENDPOINTS.adminProduct}/${tempProduct.id}`, payload);
             closeProductModal();
-            getProducts(pageInfo.current_page);
+            await getProducts(pageInfo.current_page);
             Swal.fire({ icon: 'success', title: '更新成功' });
         } catch (error) {
             Swal.fire({
@@ -146,19 +153,22 @@ const Week3 = () => {
                 title: '更新失敗',
                 text: error.response?.data?.message || '發生錯誤'
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const deleteProduct = async () => {
+        setIsLoading(true);
         try {
             await axios.delete(`${API_ENDPOINTS.adminProduct}/${tempProduct.id}`);
             closeDeleteModal();
 
             // Logic to stay on current page or go back if it was the last item
             if (products.length === 1 && pageInfo.current_page > 1) {
-                getProducts(pageInfo.current_page - 1);
+                await getProducts(pageInfo.current_page - 1);
             } else {
-                getProducts(pageInfo.current_page);
+                await getProducts(pageInfo.current_page);
             }
 
             Swal.fire({ icon: 'success', title: '刪除成功' });
@@ -168,6 +178,8 @@ const Week3 = () => {
                 title: '刪除失敗',
                 text: error.response?.data?.message || '發生錯誤'
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -223,7 +235,7 @@ const Week3 = () => {
 
     return (
         <>
-            {isGenerating && <Loading />}
+            {isLoading && <Loading />}
             <div className="container mt-4">
                 <div className="d-flex justify-content-between mb-4">
                     <h2>產品列表</h2>
@@ -231,7 +243,7 @@ const Week3 = () => {
                         <button className="btn btn-primary me-2" onClick={() => openProductModal('create')}>
                             建立產品
                         </button>
-                        <button className="btn btn-outline-secondary " onClick={fakeProducts} disabled={isGenerating}>
+                        <button className="btn btn-outline-secondary " onClick={fakeProducts} disabled={isLoading}>
                             建立產品(假資料)
                         </button>
                     </div>

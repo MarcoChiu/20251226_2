@@ -1,1 +1,0 @@
-import{j as e}from"./index-BfgRsOgJ.js";const s=()=>e.jsxs("div",{className:"container mt-3",children:[e.jsx("h3",{className:"mt-4",children:"About Page"}),e.jsx("p",{children:"Welcome to the About Page!"})]});export{s as default};

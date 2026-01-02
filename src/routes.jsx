@@ -11,6 +11,7 @@ const PhotoQuery = lazy(() => import('./pages/photo/PhotoQuery'));
 const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
 const Week1 = lazy(() => import('./pages/hw/Week1'));
 const Week2 = lazy(() => import('./pages/hw/Week2'));
+const Week3 = lazy(() => import('./pages/hw/Week3'));
 const Login = lazy(() => import('./pages/Login'));
 
 const routesConfig = [
@@ -25,6 +26,7 @@ const routesConfig = [
           [
             { index: true, element: <Week1 />, title: '第一堂 - 從函式拆解認識設計模式', isShow: true },
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
+            { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
           ],
       },
       {

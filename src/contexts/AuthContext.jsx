@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { API_ENDPOINTS } from "../apiConfig";
 import { getToken, removeToken } from "../utils/frontCookie";
 
 const AuthContext = createContext(null);
@@ -7,8 +9,21 @@ export const AuthProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(false);
 
     useEffect(() => {
-        const token = getToken();
-        setIsAuth(!!token);
+        (async () => {
+            const token = getToken();
+            if (token) {
+                axios.defaults.headers.common['Authorization'] = token;
+                try {
+                    await axios.post(API_ENDPOINTS.usercheck);
+                    setIsAuth(true);
+                } catch (error) {
+                    removeToken();
+                    setIsAuth(false);
+                }
+            } else {
+                setIsAuth(false);
+            }
+        })();
     }, []);
 
     const logout = () => {

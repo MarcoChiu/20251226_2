@@ -32,7 +32,7 @@ const Login = () => {
                 username: formData.email,
                 password: formData.password,
             });
-            console.log('Login success:', response.data);
+            //console.log('Login success:', response.data);
 
             const { token, expired } = response.data;
             if (token) {

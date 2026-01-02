@@ -5,6 +5,6 @@ export const API_ENDPOINTS = {
     signin: apiBaseUrl ? `${apiBaseUrl}/admin/signin` : undefined,
     logout: apiBaseUrl ? `${apiBaseUrl}/admin/login` : undefined,
     usercheck: apiBaseUrl ? `${apiBaseUrl}/api/user/check` : undefined,
-    adminProducts: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/admin/products` : undefined
+    adminProduct: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/admin/product` : undefined,
 }
 

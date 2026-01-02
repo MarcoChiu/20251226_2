@@ -18,7 +18,7 @@ const Week2 = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axios.get(API_ENDPOINTS.adminProducts);
+                const response = await axios.get(API_ENDPOINTS.adminProduct + 's');//配合第三堂
                 setProducts(response.data.products);
             } catch (error) {
                 Swal.fire({

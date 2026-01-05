@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { API_ENDPOINTS } from "../apiConfig";
+import { API_ENDPOINTS } from "../config/apiConfig";
 import { getToken, removeToken } from "../utils/frontCookie";
 
 const AuthContext = createContext(null);

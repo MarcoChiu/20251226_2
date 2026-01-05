@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-import { API_ENDPOINTS } from "../../apiConfig";
+import { API_ENDPOINTS } from "../../config/apiConfig";
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 

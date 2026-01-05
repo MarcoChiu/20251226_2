@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { API_ENDPOINTS } from '../apiConfig';
+import { API_ENDPOINTS } from '../config/apiConfig';
 import Loading from './Loading';
 import { useAuth } from '../contexts/AuthContext';
 import { getToken } from '../utils/frontCookie';

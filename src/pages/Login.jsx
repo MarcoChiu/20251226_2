@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { API_ENDPOINTS } from '../apiConfig';
+import { API_ENDPOINTS } from '../config/apiConfig';
 import { setToken } from '../utils/frontCookie';
 import Loading from '../components/Loading';
 import Swal from 'sweetalert2';

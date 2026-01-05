@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import Layout from './components/Layout';
+import Layout from './layouts/Layout';
 import { transformRoutes } from './utils/routerUtils';
 
 const Home = lazy(() => import('./pages/Home'));

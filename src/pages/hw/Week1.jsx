@@ -22,6 +22,7 @@ const Week1 = () => {
                     title: '取得產品失敗',
                     text: error || '發生錯誤'
                 });
+            } finally {
             }
         })();
     }, []);

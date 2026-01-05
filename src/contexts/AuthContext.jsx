@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
                 } catch (error) {
                     removeToken();
                     setIsAuth(false);
+                } finally {
                 }
             } else {
                 setIsAuth(false);

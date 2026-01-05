@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { Modal } from "bootstrap";
-import { API_ENDPOINTS } from "../../config/apiConfig";
+import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
+import Swal from 'sweetalert2';
 
 const defaultProduct = {
     title: "",
@@ -17,6 +17,7 @@ const defaultProduct = {
     imageUrl: "",
     imagesUrl: []
 };
+
 
 const Week3 = () => {
     const [products, setProducts] = useState([]);
@@ -39,13 +40,15 @@ const Week3 = () => {
     const getProducts = async (page = 1) => {
         setIsLoading(true);
         try {
-            const res = await axios.get(API_ENDPOINTS.adminProduct + 's', {
-                params: { page }
-            });
-            setProducts(res.data.products);
-            setPageInfo(res.data.pagination);
+            const data = await productService.getProducts(page);
+            setProducts(data.products);
+            setPageInfo(data.pagination);
         } catch (error) {
-            alert("取得產品失敗");
+            Swal.fire({
+                icon: 'error',
+                title: '取得產品失敗',
+                text: error.response?.data?.message || '發生錯誤'
+            });
         } finally {
             setIsLoading(false);
         }
@@ -54,15 +57,13 @@ const Week3 = () => {
     const createProduct = async () => {
         setIsLoading(true);
         try {
-            const payload = {
-                data: {
-                    ...tempProduct,
-                    origin_price: Number(tempProduct.origin_price),
-                    price: Number(tempProduct.price)
-                }
+            const productData = {
+                ...tempProduct,
+                origin_price: Number(tempProduct.origin_price),
+                price: Number(tempProduct.price)
             };
 
-            await axios.post(API_ENDPOINTS.adminProduct, payload);
+            await productService.createProduct(productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
             Swal.fire({ icon: 'success', title: '新增成功' });
@@ -80,11 +81,12 @@ const Week3 = () => {
     const fakeProducts = async () => {
         setIsLoading(true);
         try {
+            const counts = 20;
             const categories = ["電子產品", "衣服", "書籍", "家具", "玩具"];
             const adjectives = ["超級", "精緻", "豪華", "實用", "時尚", "復古", "智能", "環保", "限量", "經典"];
             const nouns = ["手錶", "外套", "小說", "椅子", "機器人", "耳機", "背包", "桌子", "公仔", "手機"];
 
-            const fakeProducts = Array.from({ length: 20 }).map((_, i) => {
+            const fakeProductsData = Array.from({ length: counts }).map((_, i) => {
                 const category = categories[Math.floor(Math.random() * categories.length)];
                 const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
                 const noun = nouns[Math.floor(Math.random() * nouns.length)];
@@ -105,12 +107,13 @@ const Week3 = () => {
             });
 
             let successCount = 0;
-            for (const product of fakeProducts) {
+            for (const product of fakeProductsData) {
                 try {
-                    await axios.post(API_ENDPOINTS.adminProduct, { data: product });
+                    await productService.createProduct(product);
                     successCount++;
                 } catch (err) {
                     console.error("Failed to create fake product:", product.title, err);
+                } finally {
                 }
             }
 
@@ -118,7 +121,7 @@ const Week3 = () => {
             Swal.fire({
                 icon: 'success',
                 title: '假資料建立完成',
-                text: `成功建立 ${successCount} / 20 筆產品`
+                text: `成功建立 ${successCount} / ${counts} 筆產品`
             });
 
         } catch (error) {
@@ -135,15 +138,13 @@ const Week3 = () => {
     const updateProduct = async () => {
         setIsLoading(true);
         try {
-            const payload = {
-                data: {
-                    ...tempProduct,
-                    origin_price: Number(tempProduct.origin_price),
-                    price: Number(tempProduct.price)
-                }
+            const productData = {
+                ...tempProduct,
+                origin_price: Number(tempProduct.origin_price),
+                price: Number(tempProduct.price)
             };
 
-            await axios.put(`${API_ENDPOINTS.adminProduct}/${tempProduct.id}`, payload);
+            await productService.updateProduct(tempProduct.id, productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
             Swal.fire({ icon: 'success', title: '更新成功' });
@@ -161,10 +162,8 @@ const Week3 = () => {
     const deleteProduct = async () => {
         setIsLoading(true);
         try {
-            await axios.delete(`${API_ENDPOINTS.adminProduct}/${tempProduct.id}`);
+            await productService.deleteProduct(tempProduct.id);
             closeDeleteModal();
-
-            // Logic to stay on current page or go back if it was the last item
             if (products.length === 1 && pageInfo.current_page > 1) {
                 await getProducts(pageInfo.current_page - 1);
             } else {

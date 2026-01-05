@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import * as productService from '../../services/productService';
 import { Modal } from "bootstrap";
-import { API_ENDPOINTS } from "../../config/apiConfig";
 import Swal from 'sweetalert2';
 
 const Week2 = () => {
@@ -18,14 +17,15 @@ const Week2 = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axios.get(API_ENDPOINTS.adminProduct + 's');//配合第三堂
-                setProducts(response.data.products);
+                const data = await productService.getProducts();
+                setProducts(data.products);
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: '取得產品失敗',
                     text: error.response?.data?.message || '發生錯誤'
                 });
+            } finally {
             }
         })();
     }, []);

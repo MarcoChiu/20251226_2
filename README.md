@@ -1,3 +1,15 @@
+## 助教建議
+- 第一堂建議:
+- 第二堂建議:axios寫法統一，目前使用async(立即函式) + try catch finally
+- 第三堂建議:
+- 第四堂建議:
+- 第五堂建議:
+- 第六堂建議:
+- 第七堂建議:
+- 第八堂建議:
+ 
+
+## 安裝套件
 React
 ```bash
 npm create vite@latest
@@ -56,3 +68,4 @@ https://ec-course-api.hexschool.io/
 ```bash
 https://hexschool.github.io/ec-courses-api-swaggerDoc/#/
 ```
+

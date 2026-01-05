@@ -22,15 +22,17 @@ const Auth = ({ children }) => {
 
         axios.defaults.headers.common['Authorization'] = token;
 
-        axios.post(API_ENDPOINTS.usercheck)
-            .then(() => {
+        (async () => {
+            try {
+                await axios.post(API_ENDPOINTS.usercheck);
                 setIsAuth(true); // 驗證成功，更新 Context
-            })
-            .catch((err) => {
+            } catch (err) {
                 console.error(err);
                 setIsAuth(false); // 驗證失敗
                 navigate('/login', { state: { from: location }, replace: true });
-            });
+            } finally {
+            }
+        })();
     }, [navigate, setIsAuth, location]);
 
     if (!isAuth) {

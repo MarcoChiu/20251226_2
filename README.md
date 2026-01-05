@@ -1,15 +1,18 @@
 ## 助教建議
-- 第一堂建議:
-- 第二堂建議:axios寫法統一，目前使用async(立即函式) + try catch finally
-- 第三堂建議:
-- 第四堂建議:
-- 第五堂建議:
-- 第六堂建議:
-- 第七堂建議:
-- 第八堂建議:
+- 第一堂建議-致愷:
+- 第二堂建議-傑利:建議axios寫法統一，目前使用async(立即函式) + try catch finally
+- 第三堂建議-
+- 第四堂建議-
+- 第五堂建議-
+- 第六堂建議-
+- 第七堂建議-
+- 第八堂建議-
  
 
 ## 安裝套件
+
+###  僅本地端
+
 React
 ```bash
 npm create vite@latest
@@ -24,6 +27,8 @@ scss
 ```bash
 npm add -D sass
 ```
+
+###  發佈端
 
 axios
 ```bash

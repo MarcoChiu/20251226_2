@@ -113,7 +113,6 @@ const Week3 = () => {
                     successCount++;
                 } catch (err) {
                     console.error("Failed to create fake product:", product.title, err);
-                } finally {
                 }
             }
 

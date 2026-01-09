@@ -12,6 +12,7 @@ const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
 const Week1 = lazy(() => import('./pages/hw/Week1'));
 const Week2 = lazy(() => import('./pages/hw/Week2'));
 const Week3 = lazy(() => import('./pages/hw/Week3'));
+const Week4 = lazy(() => import('./pages/hw/Week4'));
 const Login = lazy(() => import('./pages/Login'));
 
 const routesConfig = [
@@ -20,13 +21,14 @@ const routesConfig = [
     element: <Layout />,
     children: [
       { index: true, element: <Home />, title: '首頁', isShow: true },
-      { path: 'about', element: <About />, title: '關於我', isShow: false },
+      { path: 'about', element: <About />, title: '關於我', isShow: true },
       {
         path: 'hw', title: '每堂作業', isShow: true, children:
           [
             { index: true, element: <Week1 />, title: '第一堂 - 從函式拆解認識設計模式', isShow: true },
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
             { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
+            { path: 'week4', element: <Week4 />, title: '第四週 - 元件化', isShow: true, isAuth: true },
           ],
       },
       {

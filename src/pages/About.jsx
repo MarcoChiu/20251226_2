@@ -1,9 +1,15 @@
 const About = () => {
-    //console.log('About rendered');
+
+    // 用陣列也可以顯示多個元素
+    let element = [<h2 key="1">關於我頁面 h2</h2>];
+
+    element.push(
+        <h4 key="2" >關於我頁面 h4</h4>
+    );
+
     return (
         <div className="container mt-3">
-            <h3 className="mt-4">About Page</h3>
-            <p>Welcome to the About Page!</p>
+            {element}
         </div>
     );
 }

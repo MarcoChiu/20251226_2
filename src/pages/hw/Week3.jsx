@@ -316,11 +316,11 @@ const Week3 = () => {
                                 <div className="row">
                                     <div className="col-sm-4">
                                         <div className="mb-3">
-                                            <label htmlFor="imageUrl" className="form-label">主要圖片</label>
+                                            <label htmlFor="imageUrl" className="form-label">封面圖片</label>
                                             <input name="imageUrl" type="text" className="form-control" placeholder="請輸入圖片連結" value={tempProduct.imageUrl} onChange={handleInputChange} />
                                             <img className="img-fluid mt-3" src={tempProduct.imageUrl} alt="" />
                                         </div>
-                                        <h3 className="mb-3">多圖新增</h3>
+                                        <h3 className="mb-3">產品圖片</h3>
                                         {Array.isArray(tempProduct.imagesUrl) && tempProduct.imagesUrl.map((url, index) => (
                                             <div className="mb-3" key={index}>
                                                 <label className="form-label">圖片網址 {index + 1}</label>
@@ -374,11 +374,11 @@ const Week3 = () => {
                                         <hr />
                                         <div className="mb-3">
                                             <label htmlFor="description" className="form-label">產品描述</label>
-                                            <textarea id="description" name="description" className="form-control" placeholder="請輸入產品描述" value={tempProduct.description} onChange={handleInputChange}></textarea>
+                                            <textarea id="description" name="description" className="form-control" placeholder="請輸入產品描述" value={tempProduct.description} onChange={handleInputChange} rows={10}></textarea>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="content" className="form-label">說明內容</label>
-                                            <textarea id="content" name="content" className="form-control" placeholder="請輸入說明內容" value={tempProduct.content} onChange={handleInputChange}></textarea>
+                                            <textarea id="content" name="content" className="form-control" placeholder="請輸入說明內容" value={tempProduct.content} onChange={handleInputChange} rows={10}></textarea>
                                         </div>
                                         <div className="mb-3">
                                             <div className="form-check">

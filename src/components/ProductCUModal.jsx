@@ -14,7 +14,9 @@ const defaultProduct = {
     content: "",
     is_enabled: 1,
     imageUrl: "",
-    imagesUrl: []
+    imagesUrl: [],
+    salefrom: "",
+    saleto: ""
 };
 
 const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
@@ -177,6 +179,26 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
     };
 
     const handleConfirm = () => {
+        // 驗證販售日期必填
+        if (!tempProduct.salefrom || !tempProduct.saleto) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫販售日期起和販售日期迄'
+            });
+            return;
+        }
+
+        // 驗證販售日期
+        if (new Date(tempProduct.salefrom) > new Date(tempProduct.saleto)) {
+            Swal.fire({
+                icon: 'error',
+                title: '日期錯誤',
+                text: '販售日期起不可以大於販售日期迄'
+            });
+            return;
+        }
+
         if (isNew) {
             onCreate(tempProduct);
         } else {
@@ -195,7 +217,9 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                         <button type="button" className="btn-close btn-close-white" onClick={() => modalInstance.current.hide()} aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
+
                         <div className="row">
+                            {/*左*/}
                             <div className="col-sm-4">
                                 <div className="mb-3">
                                     <label htmlFor="imageUrl" className="form-label">封面圖片</label>
@@ -245,6 +269,7 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                                     )}
                                 </div>
                             </div>
+                            {/*右*/}
                             <div className="col-sm-8">
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">標題</label>
@@ -272,6 +297,17 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                                         <input id="price" name="price" type="number" className="form-control" placeholder="請輸入售價" value={tempProduct.price} onChange={handleInputChange} />
                                     </div>
                                 </div>
+
+                                <div className="row">
+                                    <div className="mb-3 col-md-6">
+                                        <label htmlFor="salefrom" className="form-label">販售日期起</label>
+                                        <input id="salefrom" name="salefrom" type="date" className="form-control" value={tempProduct.salefrom || ''} onChange={handleInputChange} />
+                                    </div>
+                                    <div className="mb-3 col-md-6">
+                                        <label htmlFor="saleto" className="form-label">販售日期迄</label>
+                                        <input id="saleto" name="saleto" type="date" className="form-control" value={tempProduct.saleto || ''} onChange={handleInputChange} />
+                                    </div>
+                                </div>
                                 <hr />
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">產品描述</label>
@@ -280,6 +316,11 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                                 <div className="mb-3">
                                     <label htmlFor="content" className="form-label">說明內容</label>
                                     <textarea id="content" name="content" className="form-control" placeholder="請輸入說明內容" value={tempProduct.content} onChange={handleInputChange} rows={10}></textarea>
+                                </div>
+
+                                <div className="row">
+
+
                                 </div>
                                 <div className="mb-3">
                                     <div className="form-check">
@@ -301,7 +342,7 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                     {isUploading && <Loading />}
                 </div>
             </div>
-        </div>
+        </div >
     );
 });
 

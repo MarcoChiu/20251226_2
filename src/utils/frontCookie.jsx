@@ -1,4 +1,4 @@
-export const getToken = () => document.cookie.replace(/(?:(?:^|.*;\s*)fromtToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+export const getToken = () => document.cookie.replace(/(?:(?:^|.*;\s*)fromtToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
 export const setToken = (token, expired) => {
     document.cookie = `fromtToken=${token}; expires=${new Date(expired)}; path=/`;

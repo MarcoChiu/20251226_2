@@ -18,7 +18,15 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: 5001
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'color-functions', 'if-function'],
+          quietDeps: true,
+        },
+      },
     }
   }
 })
-

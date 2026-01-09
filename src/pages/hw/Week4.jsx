@@ -133,12 +133,18 @@ const Week4 = () => {
                         <div className="col-md-6 mb-6" key={product.id}>
                             <div className="card h-100 shadow-sm border-0">
                                 <div className="position-relative" style={{ height: "250px", overflow: "hidden" }}>
-                                    <img
-                                        src={product.imageUrl}
-                                        className="card-img-top h-100 w-100"
-                                        style={{ objectFit: "cover" }}
-                                        alt={product.title}
-                                    />
+                                    {product.imageUrl ? (
+                                        <img
+                                            src={product.imageUrl}
+                                            className="card-img-top h-100 w-100"
+                                            style={{ objectFit: "cover" }}
+                                            alt={product.title}
+                                        />
+                                    ) : (
+                                        <div className="h-100 w-100 bg-secondary d-flex align-items-center justify-content-center">
+                                            <span className="text-white">無圖片</span>
+                                        </div>
+                                    )}
                                     {!product.is_enabled && (
                                         <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
                                             <span className="text-white fw-bold border border-white px-3 py-1 rounded">未啟用</span>

@@ -64,6 +64,12 @@ npm i react-router-dom
 ```bash
 npm install sweetalert2
 ```
+ rimraf   
+ ```bash
+npm install --save-dev rimraf
+```
+
+
 六角API申請
 ```bash
 https://ec-course-api.hexschool.io/

@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.MY_PATH': JSON.stringify(myPath),
     },
     server: {
-      port: 5001
+      port: 5501
     },
     css: {
       preprocessorOptions: {

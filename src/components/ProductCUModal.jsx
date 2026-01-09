@@ -237,7 +237,7 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                                             disabled={isUploading}
                                         />
                                     </div>
-                                    <img className="img-fluid mt-3" src={tempProduct.imageUrl} alt="" />
+                                    {tempProduct.imageUrl && <img className="img-fluid mt-3" src={tempProduct.imageUrl} alt="" />}
                                 </div>
                                 <h3 className="mb-3">產品圖片</h3>
                                 {Array.isArray(tempProduct.imagesUrl) && tempProduct.imagesUrl.map((url, index) => (

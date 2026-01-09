@@ -179,6 +179,70 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
     };
 
     const handleConfirm = () => {
+        // 驗證必填欄位
+        if (!tempProduct.title?.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫標題'
+            });
+            return;
+        }
+
+        if (!tempProduct.category?.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫分類'
+            });
+            return;
+        }
+
+        if (!tempProduct.unit?.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫單位'
+            });
+            return;
+        }
+
+        if (!tempProduct.origin_price || tempProduct.origin_price <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫原價'
+            });
+            return;
+        }
+
+        if (!tempProduct.price || tempProduct.price <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫售價'
+            });
+            return;
+        }
+
+        if (!tempProduct.description?.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫產品描述'
+            });
+            return;
+        }
+
+        if (!tempProduct.content?.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: '欄位必填',
+                text: '請填寫說明內容'
+            });
+            return;
+        }
+
         // 驗證販售日期必填
         if (!tempProduct.salefrom || !tempProduct.saleto) {
             Swal.fire({

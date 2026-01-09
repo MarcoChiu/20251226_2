@@ -364,11 +364,11 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
 
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
-                                        <label htmlFor="salefrom" className="form-label">販售日期起</label>
+                                        <label htmlFor="salefrom" className="form-label">販售日期起(自訂欄位)</label>
                                         <input id="salefrom" name="salefrom" type="date" className="form-control" value={tempProduct.salefrom || ''} onChange={handleInputChange} />
                                     </div>
                                     <div className="mb-3 col-md-6">
-                                        <label htmlFor="saleto" className="form-label">販售日期迄</label>
+                                        <label htmlFor="saleto" className="form-label">販售日期迄(自訂欄位)</label>
                                         <input id="saleto" name="saleto" type="date" className="form-control" value={tempProduct.saleto || ''} onChange={handleInputChange} />
                                     </div>
                                 </div>

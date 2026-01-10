@@ -1,5 +1,9 @@
 
 const Pagination = ({ pageInfo, onPageChange }) => {
+    if (!pageInfo || !pageInfo.total_pages || pageInfo.total_pages <= 1) {
+        return null;
+    }
+
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination justify-content-center">

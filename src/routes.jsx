@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 import Layout from './layouts/Layout';
-import { transformRoutes } from './utils/routerUtils';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -15,7 +14,7 @@ const Week3 = lazy(() => import('./pages/hw/Week3'));
 const Week4 = lazy(() => import('./pages/hw/Week4'));
 const Login = lazy(() => import('./pages/Login'));
 
-const routesConfig = [
+export const routes= [
   {
     path: '/',
     element: <Layout />,
@@ -49,5 +48,4 @@ const routesConfig = [
     ],
   },
 ];
-
-export const routes = transformRoutes(routesConfig);
+ 

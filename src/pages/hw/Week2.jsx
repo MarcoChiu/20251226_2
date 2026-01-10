@@ -46,13 +46,19 @@ const Week2 = () => {
                 {products.length > 0 && products.map((item) => (
                     <div className="col-md-4 mb-4" key={item.id}>
                         <div className="card h-100 d-flex flex-column">
-                            <img
-                                src={item.imageUrl}
-                                className="card-img-top"
-                                alt={item.title}
-                                style={{ maxHeight: "350px", objectFit: "cover" }}
-                                loading="lazy"
-                            />
+                            {item.imageUrl ? (
+                                <img
+                                    src={item.imageUrl}
+                                    className="card-img-top"
+                                    alt={item.title}
+                                    style={{ maxHeight: "350px", objectFit: "cover" }}
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div className="w-100 bg-secondary d-flex align-items-center justify-content-center" style={{ height: "250px" }}>
+                                    <span className="text-white">無圖片</span>
+                                </div>
+                            )}
                             <div className="card-body d-flex flex-column">
                                 <div className="flex-grow-1">
                                     <h5 className="card-title text-primary">

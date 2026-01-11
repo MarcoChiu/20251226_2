@@ -1,6 +1,6 @@
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { routes } from './routes';
-import { transformRoutes } from './components/Auth';
+import { transformRoutes } from './utils/routeUtils';
 
 const App = () => {
   return (

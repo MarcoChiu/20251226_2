@@ -24,6 +24,15 @@ const Week4 = () => {
             const data = await productService.getProducts(page);
             setProducts(data.products);
             setPageInfo(data.pagination);
+
+            // 滾動到商品列表
+            setTimeout(() => {
+                const scrollTo = document.querySelector('.container.mt-4');
+                if (scrollTo) {
+                    scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 0);
+
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -187,7 +196,11 @@ const Week4 = () => {
                 </div>
 
                 {/* 分頁 */}
-                <Pagination pageInfo={pageInfo} onPageChange={getProducts} />
+                <Pagination
+                    currentPage={pageInfo.current_page}
+                    totalPages={pageInfo.total_pages}
+                    onPageChange={getProducts}
+                />
 
                 {/* 新增 編輯 Modal */}
                 <ProductCUModal

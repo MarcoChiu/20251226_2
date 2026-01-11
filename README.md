@@ -69,6 +69,10 @@ npm install sweetalert2
 npm install --save-dev rimraf
 ```
 
+prop-types
+```bash
+npm install prop-types
+```
 
 六角API申請
 ```bash

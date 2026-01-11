@@ -1,50 +1,64 @@
+import PropTypes from 'prop-types';
 
-const Pagination = ({ pageInfo, onPageChange }) => {
-    if (!pageInfo || !pageInfo.total_pages || pageInfo.total_pages <= 1) {
-        return null;
-    }
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    if (!totalPages || totalPages <= 1) return null;
+
+    const handlePageChange = (page, e) => {
+        e.preventDefault();
+        onPageChange(page);
+    };
 
     return (
-        <nav aria-label="Page navigation">
+        <nav aria-label="Page navigation" className="mt-5">
             <ul className="pagination justify-content-center">
-                <li className={`page-item ${!pageInfo.has_pre && 'disabled'}`}>
-                    <a className="page-link" href="/" onClick={(e) => {
-                        e.preventDefault();
-                        if (pageInfo.has_pre) {
-                            onPageChange(pageInfo.current_page - 1);
-                            window.scrollTo(0, 0);
-                        }
-                    }}>
-                        &laquo;
+                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <a
+                        className="page-link"
+                        href="/"
+                        onClick={(e) => handlePageChange(currentPage - 1, e)}
+                        aria-label="Previous"
+                    >
+                        <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                {
-                    Array.from({ length: pageInfo.total_pages }).map((_, index) => (
-                        <li className={`page-item ${pageInfo.current_page === index + 1 && 'active'}`} key={index}>
-                            <a className="page-link" href="/" onClick={(e) => {
-                                e.preventDefault();
-                                onPageChange(index + 1);
-                                window.scrollTo(0, 0);
-                            }}>
-                                {index + 1}
+
+                {[...Array(totalPages)].map((_, index) => {
+                    const page = index + 1;
+                    return (
+                        <li
+                            key={page}
+                            className={`page-item ${currentPage === page ? 'active' : ''}`}
+                        >
+                            <a
+                                className="page-link"
+                                href="/"
+                                onClick={(e) => handlePageChange(page, e)}
+                            >
+                                {page}
                             </a>
                         </li>
-                    ))
-                }
-                <li className={`page-item ${!pageInfo.has_next && 'disabled'}`}>
-                    <a className="page-link" href="/" onClick={(e) => {
-                        e.preventDefault();
-                        if (pageInfo.has_next) {
-                            onPageChange(pageInfo.current_page + 1);
-                            window.scrollTo(0, 0);
-                        }
-                    }}>
-                        &raquo;
+                    );
+                })}
+
+                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                    <a
+                        className="page-link"
+                        href="/"
+                        onClick={(e) => handlePageChange(currentPage + 1, e)}
+                        aria-label="Next"
+                    >
+                        <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
     );
+};
+
+Pagination.propTypes = {
+    currentPage: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
 };
 
 export default Pagination;

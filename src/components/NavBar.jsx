@@ -8,10 +8,23 @@ const NavItem = ({ item, onItemClick }) => {
     const location = useLocation();
     const hasChildren = item.children && item.children.length > 0;
     const isChildActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
-
     const toggleDropdown = (e) => {
         e.preventDefault();
-        const dropdown = Dropdown.getOrCreateInstance(e.currentTarget);
+        const currentToggle = e.currentTarget;
+        const dropdown = Dropdown.getOrCreateInstance(currentToggle);
+
+        // 關閉同一 navbar 內其他開啟的 dropdown
+        const navbarNav = currentToggle.closest('.navbar-nav');
+        if (navbarNav) {
+            const openToggles = navbarNav.querySelectorAll('.dropdown-toggle.show');
+            openToggles.forEach(toggle => {
+                if (toggle !== currentToggle) {
+                    const otherDropdown = Dropdown.getOrCreateInstance(toggle);
+                    otherDropdown.hide();
+                }
+            });
+        }
+
         dropdown.toggle();
     };
 

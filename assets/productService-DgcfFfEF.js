@@ -1,1 +1,0 @@
-import{a as t,A as s}from"./index-BkUxBIfv.js";const d=async(a=1)=>(await t.get(`${s.adminProduct}s`,{params:{page:a}})).data,r=async a=>{await t.post(s.adminProduct,{data:a})},e=async(a,c)=>{await t.put(`${s.adminProduct}/${a}`,{data:c})},n=async a=>{await t.delete(`${s.adminProduct}/${a}`)};export{r as c,n as d,d as g,e as u};

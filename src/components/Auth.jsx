@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/apiConfig';
 import Loading from './Loading';
 import { useAuth } from '../contexts/AuthContext';
 import { getToken } from '../utils/frontCookie';
+import { checkAuth, setupAxiosHeaders } from '../services/authService';
 
 const Auth = ({ children }) => {
     const navigate = useNavigate();
@@ -19,12 +18,12 @@ const Auth = ({ children }) => {
             navigate('/login', { state: { from: location }, replace: true });
             return;
         }
+        setupAxiosHeaders(token);
 
-        axios.defaults.headers.common['Authorization'] = token;
 
         (async () => {
             try {
-                await axios.post(API_ENDPOINTS.usercheck);
+                await checkAuth();
                 setIsAuth(true); // 驗證成功，更新 Context
             } catch (err) {
                 console.error(err);

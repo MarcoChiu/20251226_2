@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { API_ENDPOINTS } from '../config/apiConfig';
 import { setToken } from '../utils/frontCookie';
 import Loading from '../components/Loading';
 import Swal from 'sweetalert2';
-
+import { login } from '../services/authService';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -28,13 +26,13 @@ const Login = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await axios.post(API_ENDPOINTS.signin, {
+            const data = await login({
                 username: formData.email,
                 password: formData.password,
             });
-            //console.log('Login success:', response.data);
+            //console.log('Login success:', data);
 
-            const { token, expired } = response.data;
+            const { token, expired } = data;
             if (token) {
                 await Swal.fire({
                     icon: 'success',

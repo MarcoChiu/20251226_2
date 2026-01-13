@@ -1,10 +1,9 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
 import PhotoMenu from './PhotoMenu.jsx';
+import { searchPhotos } from '../../services/unsplashService';
 
-const api = 'https://api.unsplash.com/search/photos/';
-const accessKey = 'Mjilp2VDqxCTCbkq9e6_1NA_43BXd60uD2T56bNMXV8';
+
 
 const PhotoLayout = () => {
     const [photos, setPhotos] = useState([]);
@@ -22,13 +21,7 @@ const PhotoLayout = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(api, {
-                params: {
-                    query: query,
-                    per_page: 10,
-                    client_id: accessKey
-                }
-            });
+            const response = await searchPhotos(query);
             setPhotos(response.data.results);
 
             // 從 response headers 取得剩餘呼叫次數

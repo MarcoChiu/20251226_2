@@ -14,6 +14,7 @@ const Week1 = () => {
     useEffect(() => {
         (async () => {
             try {
+                //第一周假資料先在這邊做不移至services裡
                 const response = await axios.get(`${path}data/week1.json`);
                 setData(response.data);
             } catch (error) {

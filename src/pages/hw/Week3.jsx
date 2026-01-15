@@ -379,11 +379,11 @@ const Week3 = () => {
                                         <div className="row">
                                             <div className="mb-3 col-md-6">
                                                 <label htmlFor="origin_price" className="form-label">原價</label>
-                                                <input id="origin_price" name="origin_price" type="number" className="form-control" placeholder="請輸入原價" value={tempProduct.origin_price} onChange={handleInputChange} />
+                                                <input id="origin_price" name="origin_price" type="number" className="form-control" placeholder="請輸入原價" min="0" value={tempProduct.origin_price} onChange={handleInputChange} />
                                             </div>
                                             <div className="mb-3 col-md-6">
                                                 <label htmlFor="price" className="form-label">售價</label>
-                                                <input id="price" name="price" type="number" className="form-control" placeholder="請輸入售價" value={tempProduct.price} onChange={handleInputChange} />
+                                                <input id="price" name="price" type="number" className="form-control" placeholder="請輸入售價" min="0" value={tempProduct.price} onChange={handleInputChange} />
                                             </div>
                                         </div>
                                         <hr />

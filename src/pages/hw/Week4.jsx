@@ -18,21 +18,22 @@ const Week4 = () => {
     }, []);
 
     //API
-    const getProducts = async (page = 1) => {
+    const getProducts = async (page = 1, shouldScroll = true) => {
         setIsLoading(true);
         try {
             const data = await productService.getProducts(page);
             setProducts(data.products);
+            setProducts(data.products);
             setPageInfo(data.pagination);
 
-            // 滾動到商品列表
-            setTimeout(() => {
-                const scrollTo = document.querySelector('.container.mt-4');
-                if (scrollTo) {
-                    scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 0);
-
+            if (shouldScroll) {
+                setTimeout(() => {
+                    const scrollTo = document.querySelector('.container.mt-4');
+                    if (scrollTo) {
+                        scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 0);
+            }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -55,7 +56,7 @@ const Week4 = () => {
 
             await productService.createProduct(productData);
             productModalRef.current.hide();
-            await getProducts(pageInfo.current_page);
+            await getProducts(pageInfo.current_page, false);
             Swal.fire({ icon: 'success', title: '新增成功' });
         } catch (error) {
             Swal.fire({
@@ -79,7 +80,7 @@ const Week4 = () => {
 
             await productService.updateProduct(product.id, productData);
             productModalRef.current.hide();
-            await getProducts(pageInfo.current_page);
+            await getProducts(pageInfo.current_page, false);
             Swal.fire({ icon: 'success', title: '更新成功' });
         } catch (error) {
             Swal.fire({
@@ -98,9 +99,9 @@ const Week4 = () => {
             await productService.deleteProduct(product.id);
             deleteModalRef.current.hide();
             if (products.length === 1 && pageInfo.current_page > 1) {
-                await getProducts(pageInfo.current_page - 1);
+                await getProducts(pageInfo.current_page - 1, false);
             } else {
-                await getProducts(pageInfo.current_page);
+                await getProducts(pageInfo.current_page, false);
             }
 
             Swal.fire({ icon: 'success', title: '刪除成功' });

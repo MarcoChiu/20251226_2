@@ -14,7 +14,11 @@ const Week3 = lazy(() => import('./pages/hw/Week3'));
 const Week4 = lazy(() => import('./pages/hw/Week4'));
 const Login = lazy(() => import('./pages/Login'));
 
-export const routes= [
+const ProductList = lazy(() => import('./pages/week5/ProductList'));
+const ShoppingCart = lazy(() => import('./pages/week5/ShoppingCart'));
+
+
+export const routes = [
   {
     path: '/',
     element: <Layout />,
@@ -28,6 +32,13 @@ export const routes= [
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
             { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
             { path: 'week4', element: <Week4 />, title: '第四週 - 元件化', isShow: true, isAuth: true },
+          ],
+      },
+      {
+        path: 'week5', title: '第五週 - Vite、React Router', isShow: true, children:
+          [
+            { index: true, element: <ProductList />, title: '商品列表', isShow: true, isAuth: true },
+            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true, isAuth: true },
           ],
       },
       {
@@ -48,4 +59,4 @@ export const routes= [
     ],
   },
 ];
- 
+

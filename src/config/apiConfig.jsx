@@ -7,4 +7,7 @@ export const API_ENDPOINTS = {
     usercheck: apiBaseUrl ? `${apiBaseUrl}/api/user/check` : undefined,
     adminProduct: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/admin/product` : undefined,
     uploadImage: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/admin/upload` : undefined,
+    products: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/products` : undefined,
+    product: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/product` : undefined,
+    cart: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/cart` : undefined,
 }

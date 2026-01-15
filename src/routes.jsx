@@ -35,10 +35,10 @@ export const routes = [
           ],
       },
       {
-        path: 'week5', title: '第五週 - Vite、React Router', isShow: true, children:
+        path: 'week5', title: '第五週 - Vite、React Router', isShow: true, isAuth: true, children:
           [
-            { index: true, element: <ProductList />, title: '商品列表', isShow: true, isAuth: true },
-            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true, isAuth: true },
+            { index: true, element: <ProductList />, title: '商品列表', isShow: true  },
+            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true},
           ],
       },
       {

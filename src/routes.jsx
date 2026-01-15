@@ -26,9 +26,9 @@ export const routes = [
       { index: true, element: <Home />, title: '首頁', isShow: true },
       { path: 'about', element: <About />, title: '關於我', isShow: true },
       {
-        path: 'hw', title: '每堂作業', isShow: true, children:
+        path: 'hw', title: '第一至四週作業', isShow: true, children:
           [
-            { index: true, element: <Week1 />, title: '第一堂 - 從函式拆解認識設計模式', isShow: true },
+            { index: true, element: <Week1 />, title: '第一週 - 從函式拆解認識設計模式', isShow: true },
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
             { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
             { path: 'week4', element: <Week4 />, title: '第四週 - 元件化', isShow: true, isAuth: true },

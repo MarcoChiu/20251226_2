@@ -1,1 +1,0 @@
-import{a as t,A as r}from"./index-MsTtMQ9-.js";const o=async(a,s=1)=>(await t.post(r.cart,{data:{product_id:a,qty:s}})).data,d=async()=>(await t.get(r.cart)).data,u=async(a,s,e)=>(await t.put(`${r.cart}/${a}`,{data:{product_id:s,qty:e}})).data,i=async a=>(await t.delete(`${r.cart}/${a}`)).data,l=async()=>(await t.delete(`${r.cart}s`)).data;export{o as a,i as b,l as c,d as g,u};

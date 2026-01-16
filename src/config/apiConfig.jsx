@@ -1,5 +1,5 @@
-const apiBaseUrl = import.meta.env.API_BASE_URL || '';
-const myPath = import.meta.env.MY_PATH || '';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+const myPath = import.meta.env.VITE_MY_PATH || '';
 
 export const API_ENDPOINTS = {
     signin: apiBaseUrl ? `${apiBaseUrl}/admin/signin` : undefined,

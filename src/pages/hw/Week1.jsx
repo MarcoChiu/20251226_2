@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 const Week1 = () => {
     const [data, setData] = useState([]);
     const [product, setProduct] = useState(null);
-    const path = import.meta.env.BASE_URL;
 
     const modalRef = useRef(null);
     const myModal = useRef(null);
@@ -15,7 +14,7 @@ const Week1 = () => {
         (async () => {
             try {
                 //第一周假資料先在這邊做不移至services裡
-                const response = await axios.get(`${path}data/week1.json`);
+                const response = await axios.get('data/week1.json');
                 setData(response.data);
             } catch (error) {
                 Swal.fire({

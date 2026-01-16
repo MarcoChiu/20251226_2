@@ -17,7 +17,6 @@ const Login = lazy(() => import('./pages/Login'));
 const ProductList = lazy(() => import('./pages/week5/ProductList'));
 const ShoppingCart = lazy(() => import('./pages/week5/ShoppingCart'));
 
-
 export const routes = [
   {
     path: '/',
@@ -37,8 +36,8 @@ export const routes = [
       {
         path: 'week5', title: '第五週 - Vite、React Router', isShow: true, isAuth: true, children:
           [
-            { index: true, element: <ProductList />, title: '商品列表', isShow: true  },
-            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true},
+            { index: true, element: <ProductList />, title: '商品列表', isShow: true },
+            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true },
           ],
       },
       {

@@ -99,7 +99,9 @@ const ShoppingCart = () => {
                                 清空購物車
                             </button>
                         </div>
-                        <div className="table-responsive">
+
+                        {/* Desktop View */}
+                        <div className="table-responsive d-none d-md-block">
                             <table className="table align-middle">
                                 <thead>
                                     <tr>
@@ -129,7 +131,7 @@ const ShoppingCart = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                {item.product.title}
+                                                <span className="fw-bold">{item.product.title}</span>
                                                 {item.coupon && <div className="text-success small">已套用優惠券：{item.coupon.title}</div>}
                                             </td>
                                             <td>
@@ -178,6 +180,91 @@ const ShoppingCart = () => {
                                     )}
                                 </tfoot>
                             </table>
+                        </div>
+
+                        {/* Mobile View */}
+                        <div className="d-md-none">
+                            {cart.carts.map((item) => (
+                                <div key={item.id} className="card mb-3 shadow-sm border-0">
+                                    <div className="row g-0">
+                                        <div className="col-4 position-relative">
+                                            <div style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                minHeight: '120px',
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                                backgroundImage: `url(${item.product.imageUrl || ''})`
+                                            }} className="rounded-start h-100 bg-light" >
+                                                {!item.product.imageUrl && <span className="d-flex position-absolute top-50 start-50 translate-middle text-secondary small">無圖</span>}
+                                            </div>
+                                        </div>
+                                        <div className="col-8">
+                                            <div className="card-body py-2 px-3">
+                                                <div className="d-flex justify-content-between align-items-start mb-2">
+                                                    <span className="card-title fw-bold mb-0" style={{ marginRight: '24px', whiteSpace: 'normal', wordBreak: 'break-word', display: 'block' }}>
+                                                        {item.product.title}
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-danger btn-sm p-1 lh-1 position-absolute top-0 end-0 m-2"
+                                                        onClick={() => handleRemoveCartItem(item.id)}
+                                                    >
+                                                        <small>x</small>
+                                                    </button>
+                                                </div>
+
+                                                {item.coupon && <div className="text-success small mb-2">已套用優惠券：{item.coupon.title}</div>}
+
+                                                <div className="d-flex justify-content-between align-items-end">
+                                                    <div className="d-flex align-items-center">
+                                                        <select
+                                                            className="form-select form-select-sm me-2"
+                                                            value={item.qty}
+                                                            onChange={(e) => handleUpdateCartItem(item, Number(e.target.value))}
+                                                            style={{ width: '70px', minWidth: '70px' }}
+                                                        >
+                                                            {[...Array(20)].map((_, i) => (
+                                                                <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                                            ))}
+                                                        </select>
+                                                        <span className="small text-muted text-nowrap">{item.product.unit}</span>
+                                                    </div>
+                                                    <div className="text-end">
+                                                        {item.final_total !== item.total ? (
+                                                            <>
+                                                                <small className="text-muted text-decoration-line-through d-block">
+                                                                    ${item.total}
+                                                                </small>
+                                                                <span className="text-success fw-bold">
+                                                                    ${item.final_total}
+                                                                </span>
+                                                            </>
+                                                        ) : (
+                                                            <span className="fw-bold fs-5">${item.total}</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <div className="card shadow-sm border-0">
+                                <div className="card-body">
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <span className="h5 mb-0">總計</span>
+                                        <span className="h5 mb-0">${cart.total}</span>
+                                    </div>
+                                    {cart.final_total !== cart.total && (
+                                        <div className="d-flex justify-content-between align-items-center text-success">
+                                            <span>折扣價</span>
+                                            <span className="fw-bold">${cart.final_total}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ) : (

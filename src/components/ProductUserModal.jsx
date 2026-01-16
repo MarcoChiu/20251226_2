@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Modal } from 'bootstrap';
-import * as productService from '../services/productService';
 import * as cartService from '../services/cartService';
 import Swal from 'sweetalert2';
 import Loading from './Loading';
@@ -9,7 +8,7 @@ const ProductUserModal = forwardRef((props, ref) => {
     const [product, setProduct] = useState(null);
     const [qty, setQty] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [currentImage, setCurrentImage] = useState(''); // Add state for current image
+    const [currentImage, setCurrentImage] = useState('');
     const modalRef = useRef(null);
     const modalInstance = useRef(null);
 
@@ -21,7 +20,7 @@ const ProductUserModal = forwardRef((props, ref) => {
         show: (item) => {
             setProduct(item);
             setQty(1);
-            setCurrentImage(item.imageUrl); // Initialize current image
+            setCurrentImage(item.imageUrl);
             modalInstance.current.show();
         },
         hide: () => {
@@ -65,7 +64,7 @@ const ProductUserModal = forwardRef((props, ref) => {
             <div className="modal-dialog modal-lg">
                 <div className="modal-content border-0 shadow-lg">
                     <div className="modal-header border-bottom-0 p-4 pb-0">
-                        {/* Optional: Add a subtle badge or brand name here if needed */}
+
                         <span className="badge bg-light text-dark fs-6">{product.category}</span>
                         <button type="button" className="btn-close" onClick={() => modalInstance.current.hide()} aria-label="Close"></button>
                     </div>
@@ -77,12 +76,12 @@ const ProductUserModal = forwardRef((props, ref) => {
                         </div>
 
                         <div className="row g-4 d-flex align-items-center">
-                            {/* Left: Product Image */}
+
                             <div className="col-md-6">
                                 <div className="ratio ratio-1x1 bg-light rounded shadow-sm overflow-hidden position-relative">
                                     {currentImage ? (
                                         <img
-                                            src={currentImage} // Use currentImage state
+                                            src={currentImage}
                                             className="img-fluid object-fit-cover w-100 h-100"
                                             alt={product.title}
                                         />
@@ -94,7 +93,7 @@ const ProductUserModal = forwardRef((props, ref) => {
                                 </div>
                             </div>
 
-                            {/* Right: Product Details */}
+
                             <div className="col-md-6 d-flex flex-column">
                                 <div className="d-flex align-items-end mb-4">
                                     {product.origin_price !== product.price && (

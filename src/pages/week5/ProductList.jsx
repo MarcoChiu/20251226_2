@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from "react"; // Added useRef
+import { useState, useEffect, useRef } from "react";
 import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
-import ProductUserModal from '../../components/ProductUserModal'; // Import Modal
+import ProductUserModal from '../../components/ProductUserModal';
 import Swal from 'sweetalert2';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const productModalRef = useRef(null); // Ref for Modal
+    const productModalRef = useRef(null);
 
     useEffect(() => {
         getProducts();

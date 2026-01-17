@@ -3,6 +3,7 @@ import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 import ProductUserModal from '../../components/ProductUserModal';
+import ProductCard from '../../components/ProductCard';
 import Swal from 'sweetalert2';
 
 const ProductList = () => {
@@ -56,63 +57,27 @@ const ProductList = () => {
                 <div className="row mt-4">
                     {products.map((product) => (
                         <div className="col-md-6 mb-6" key={product.id}>
-                            <div className="card h-100 shadow-sm border-0">
-                                <div className="position-relative" style={{ height: "250px", overflow: "hidden" }}>
-                                    {product.imageUrl ? (
-                                        <img
-                                            src={product.imageUrl}
-                                            className="card-img-top h-100 w-100"
-                                            style={{ objectFit: "cover" }}
-                                            alt={product.title}
-                                        />
-                                    ) : (
-                                        <div className="h-100 w-100 bg-secondary d-flex align-items-center justify-content-center">
-                                            <span className="text-white">無圖片</span>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="card-body d-flex flex-column">
-                                    <div className="d-flex justify-content-between align-items-start mb-2">
-                                        <h5 className="card-title text-truncate mb-0" style={{ maxWidth: "70%" }}>{product.title}</h5>
-                                        <span className="badge bg-secondary">{product.category}</span>
-                                    </div>
-                                    <p className="card-text text-muted small mb-auto" style={{
-                                        display: "-webkit-box",
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: "vertical",
-                                        overflow: "hidden"
-                                    }}>
-                                        {product.description}
-                                    </p>
-                                    <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <div>
-                                            {product.origin_price !== product.price && (
-                                                <small className="text-decoration-line-through text-muted me-2">${product.origin_price}</small>
-                                            )}
-                                            <span className="fw-bold text-danger">${product.price}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card-footer bg-transparent border-top-0 d-flex justify-content-between pb-3">
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-primary w-100"
-                                        onClick={() => openProductModal(product)}
-                                    >
-                                        詳細資料
-                                    </button>
-                                </div>
-                            </div>
+                            <ProductCard product={product}>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary w-100"
+                                    onClick={() => openProductModal(product)}
+                                >
+                                    詳細資料
+                                </button>
+                            </ProductCard>
                         </div>
                     ))}
                 </div>
 
+                {/* 分頁 */}
                 <Pagination
                     currentPage={pageInfo.current_page}
                     totalPages={pageInfo.total_pages}
                     onPageChange={getProducts}
                 />
 
+                {/* 詳細資料 */}
                 <ProductUserModal ref={productModalRef} />
             </div>
         </>

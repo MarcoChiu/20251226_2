@@ -1,0 +1,1 @@
+import{j as e}from"./index-Bip9qa62.js";const r=()=>{let t=[e.jsx("h2",{children:"關於我頁面 h2"},"1")];return t.push(e.jsx("h4",{children:"關於我頁面 h4"},"2")),e.jsx("div",{className:"container mt-3",children:t})};export{r as default};

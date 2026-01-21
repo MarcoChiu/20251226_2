@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Modal } from 'bootstrap';
 import { uploadImage } from '../services/imageService';
-import Swal from 'sweetalert2';
+import { swalSuccess, swalError } from '../utils/sweetAlert';
 import Loading from './Loading';
 
 const defaultProduct = {
@@ -78,20 +78,12 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
     const validateFile = (file) => {
         const validTypes = ['image/jpeg', 'image/png'];
         if (!validTypes.includes(file.type)) {
-            Swal.fire({
-                icon: 'error',
-                title: '格式錯誤',
-                text: '僅限使用 jpg、jpeg 與 png 格式'
-            });
+            swalError('格式錯誤', '僅限使用 jpg、jpeg 與 png 格式');
             return false;
         }
         const maxSize = 3;
         if ((file.size / 1024 / 1024) > maxSize) {
-            Swal.fire({
-                icon: 'error',
-                title: '檔案過大',
-                text: `檔案大小限制為 ${maxSize}MB 以下`
-            });
+            swalError('檔案過大', `檔案大小限制為 ${maxSize}MB 以下`);
             return false;
         }
         return true;
@@ -111,25 +103,12 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
             const res = await uploadImage(file);
             if (res.success) {
                 setTempProduct({ ...tempProduct, imageUrl: res.imageUrl });
-                Swal.fire({
-                    icon: 'success',
-                    title: '圖片上傳成功',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                swalSuccess('圖片上傳成功');
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: '圖片上傳失敗',
-                    text: res.message || '未知錯誤'
-                });
+                swalError('圖片上傳失敗', res.message || '未知錯誤');
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '圖片上傳錯誤',
-                text: error.message || '發生錯誤'
-            });
+            swalError('圖片上傳錯誤', error.message || '發生錯誤');
         } finally {
             setIsUploading(false);
             e.target.value = ''; // Clear input
@@ -153,25 +132,12 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
                 newImages[index] = res.imageUrl;
                 setTempProduct({ ...tempProduct, imagesUrl: newImages });
 
-                Swal.fire({
-                    icon: 'success',
-                    title: '圖片上傳成功',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                swalSuccess('圖片上傳成功');
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: '圖片上傳失敗',
-                    text: res.message || '未知錯誤'
-                });
+                swalError('圖片上傳失敗', res.message || '未知錯誤');
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '圖片上傳錯誤',
-                text: error.message || '發生錯誤'
-            });
+            swalError('圖片上傳錯誤', error.message || '發生錯誤');
         } finally {
             setIsUploading(false);
             e.target.value = ''; // Clear input
@@ -181,85 +147,50 @@ const ProductCUModal = forwardRef(({ onUpdate, onCreate }, ref) => {
     const handleConfirm = () => {
         // 驗證必填欄位
         if (!tempProduct.title?.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫標題'
-            });
+            swalError('欄位必填', '請填寫標題');
             return;
         }
 
         if (!tempProduct.category?.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫分類'
-            });
+            swalError('欄位必填', '請填寫分類');
             return;
         }
 
         if (!tempProduct.unit?.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫單位'
-            });
+            swalError('欄位必填', '請填寫單位');
             return;
         }
 
         if (!tempProduct.origin_price || tempProduct.origin_price <= 0) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫原價'
-            });
+            swalError('欄位必填', '請填寫原價');
             return;
         }
 
+
         if (!tempProduct.price || tempProduct.price <= 0) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫售價'
-            });
+            swalError('欄位必填', '請填寫售價');
             return;
         }
 
         if (!tempProduct.description?.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫產品描述'
-            });
+            swalError('欄位必填', '請填寫產品描述');
             return;
         }
 
         if (!tempProduct.content?.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫說明內容'
-            });
+            swalError('欄位必填', '請填寫說明內容');
             return;
         }
 
         // 驗證販售日期必填
         if (!tempProduct.salefrom || !tempProduct.saleto) {
-            Swal.fire({
-                icon: 'error',
-                title: '欄位必填',
-                text: '請填寫販售日期起和販售日期迄'
-            });
+            swalError('欄位必填', '請填寫販售日期起和販售日期迄');
             return;
         }
 
         // 驗證販售日期
         if (new Date(tempProduct.salefrom) > new Date(tempProduct.saleto)) {
-            Swal.fire({
-                icon: 'error',
-                title: '日期錯誤',
-                text: '販售日期起不可以大於販售日期迄'
-            });
+            swalError('日期錯誤', '販售日期起不可以大於販售日期迄');
             return;
         }
 

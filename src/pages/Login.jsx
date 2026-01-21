@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setToken } from '../utils/frontCookie';
 import Loading from '../components/Loading';
-import Swal from 'sweetalert2';
+import { swalSuccess, swalError } from '../utils/sweetAlert';
 import { login } from '../services/authService';
 
 const Login = () => {
@@ -34,12 +34,7 @@ const Login = () => {
 
             const { token, expired } = data;
             if (token) {
-                await Swal.fire({
-                    icon: 'success',
-                    title: '登入成功',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                await swalSuccess('登入成功');
 
                 setToken(token, expired);
                 // 轉址邏輯：如果有來源頁面則轉回來源，否則回到首頁
@@ -49,11 +44,7 @@ const Login = () => {
 
         } catch (error) {
             //console.error('Login failed:', error);
-            Swal.fire({
-                icon: 'error',
-                title: '登入失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('登入失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

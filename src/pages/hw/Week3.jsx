@@ -3,7 +3,7 @@ import { Modal } from "bootstrap";
 import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
-import Swal from 'sweetalert2';
+import { swalSuccess, swalError } from '../../utils/sweetAlert';
 
 const defaultProduct = {
     title: "",
@@ -53,11 +53,7 @@ const Week3 = () => {
             }, 0);
 
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '取得產品失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('取得產品失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -75,13 +71,9 @@ const Week3 = () => {
             await productService.createProduct(productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
-            Swal.fire({ icon: 'success', title: '新增成功' });
+            swalSuccess('新增成功');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '新增失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('新增失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -126,18 +118,11 @@ const Week3 = () => {
             }
 
             await getProducts(pageInfo.current_page);
-            Swal.fire({
-                icon: 'success',
-                title: '假資料建立完成',
-                text: `成功建立 ${successCount} / ${counts} 筆產品`
-            });
+            await getProducts(pageInfo.current_page);
+            swalSuccess('假資料建立完成', `成功建立 ${successCount} / ${counts} 筆產品`);
 
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '建立假資料失敗',
-                text: error.message || '發生錯誤'
-            });
+            swalError('建立假資料失敗', error.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -155,13 +140,9 @@ const Week3 = () => {
             await productService.updateProduct(tempProduct.id, productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
-            Swal.fire({ icon: 'success', title: '更新成功' });
+            swalSuccess('更新成功');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '更新失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('更新失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -178,13 +159,9 @@ const Week3 = () => {
                 await getProducts(pageInfo.current_page);
             }
 
-            Swal.fire({ icon: 'success', title: '刪除成功' });
+            swalSuccess('刪除成功');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '刪除失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('刪除失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

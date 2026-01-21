@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Modal } from 'bootstrap';
 import * as cartService from '../services/cartService';
-import Swal from 'sweetalert2';
+import { swalSuccess, swalError } from '../utils/sweetAlert';
 import Loading from './Loading';
 
 const ProductUserModal = forwardRef((props, ref) => {
@@ -34,18 +34,9 @@ const ProductUserModal = forwardRef((props, ref) => {
         try {
             await cartService.addCart(product.id, qty);
             modalInstance.current.hide();
-            Swal.fire({
-                icon: 'success',
-                title: '加入購物車成功',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            swalSuccess('加入購物車成功');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '加入購物車失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('加入購物車失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

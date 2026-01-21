@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as cartService from '../../services/cartService';
-import Swal from 'sweetalert2';
+import { swalSuccess, swalError } from '../../utils/sweetAlert';
 import Loading from '../../components/Loading';
 
 const ShoppingCart = () => {
@@ -17,11 +17,7 @@ const ShoppingCart = () => {
             const data = await cartService.getCart();
             setCart(data.data);
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '取得購物車失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('取得購物車失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -33,11 +29,7 @@ const ShoppingCart = () => {
             await cartService.updateCart(item.id, item.product_id, qty);
             getCart();
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '更新購物車失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('更新購物車失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };
@@ -47,18 +39,9 @@ const ShoppingCart = () => {
         try {
             await cartService.clearCart(id);
             getCart();
-            Swal.fire({
-                icon: 'success',
-                title: '已移除商品',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            swalSuccess('已移除商品');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '移除商品失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('移除商品失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };
@@ -68,18 +51,9 @@ const ShoppingCart = () => {
         try {
             await cartService.clearAllCart();
             getCart();
-            Swal.fire({
-                icon: 'success',
-                title: '已清空購物車',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            swalSuccess('已清空購物車');
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '清空購物車失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('清空購物車失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };

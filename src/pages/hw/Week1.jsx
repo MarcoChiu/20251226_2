@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-import Swal from 'sweetalert2';
+import { swalError } from '../../utils/sweetAlert';
 
 const Week1 = () => {
     const [data, setData] = useState([]);
@@ -17,11 +17,7 @@ const Week1 = () => {
                 const response = await axios.get('data/week1.json');
                 setData(response.data);
             } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: '取得產品失敗',
-                    text: error || '發生錯誤'
-                });
+                swalError('取得產品失敗', error || '發生錯誤');
             } finally {
             }
         })();

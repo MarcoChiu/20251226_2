@@ -4,7 +4,7 @@ import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 import ProductUserModal from '../../components/ProductUserModal';
 import ProductCard from '../../components/ProductCard';
-import Swal from 'sweetalert2';
+import { swalError } from '../../utils/sweetAlert';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -32,11 +32,7 @@ const ProductList = () => {
             }, 0);
 
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '取得產品失敗',
-                text: error.response?.data?.message || '發生錯誤'
-            });
+            swalError('取得產品失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

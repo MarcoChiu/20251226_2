@@ -3,7 +3,7 @@ import { Modal } from "bootstrap";
 import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
-import { swalSuccess, swalError } from '../../utils/sweetAlert';
+import { showToast, showAlert } from '../../utils/sweetAlert';
 
 const defaultProduct = {
     title: "",
@@ -53,7 +53,7 @@ const Week3 = () => {
             }, 0);
 
         } catch (error) {
-            swalError('取得產品失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -71,9 +71,9 @@ const Week3 = () => {
             await productService.createProduct(productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
-            swalSuccess('新增成功');
+            showToast('success', '新增成功');
         } catch (error) {
-            swalError('新增失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '新增失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -119,10 +119,10 @@ const Week3 = () => {
 
             await getProducts(pageInfo.current_page);
             await getProducts(pageInfo.current_page);
-            swalSuccess('假資料建立完成', `成功建立 ${successCount} / ${counts} 筆產品`);
+            showToast('success', `假資料建立完成: 成功建立 ${successCount} / ${counts} 筆產品`);
 
         } catch (error) {
-            swalError('建立假資料失敗', error.message || '發生錯誤');
+            showAlert('error', '建立假資料失敗', error.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -140,9 +140,9 @@ const Week3 = () => {
             await productService.updateProduct(tempProduct.id, productData);
             closeProductModal();
             await getProducts(pageInfo.current_page);
-            swalSuccess('更新成功');
+            showToast('success', '更新成功');
         } catch (error) {
-            swalError('更新失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '更新失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -159,9 +159,9 @@ const Week3 = () => {
                 await getProducts(pageInfo.current_page);
             }
 
-            swalSuccess('刪除成功');
+            showToast('success', '刪除成功');
         } catch (error) {
-            swalError('刪除失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '刪除失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

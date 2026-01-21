@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as cartService from '../../services/cartService';
-import { swalSuccess, swalError } from '../../utils/sweetAlert';
+import { showToast, showAlert } from '../../utils/sweetAlert';
 import Loading from '../../components/Loading';
 
 const ShoppingCart = () => {
@@ -17,7 +17,7 @@ const ShoppingCart = () => {
             const data = await cartService.getCart();
             setCart(data.data);
         } catch (error) {
-            swalError('取得購物車失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '取得購物車失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -29,7 +29,7 @@ const ShoppingCart = () => {
             await cartService.updateCart(item.id, item.product_id, qty);
             getCart();
         } catch (error) {
-            swalError('更新購物車失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '更新購物車失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };
@@ -39,9 +39,9 @@ const ShoppingCart = () => {
         try {
             await cartService.clearCart(id);
             getCart();
-            swalSuccess('已移除商品');
+            showToast('success', '已移除商品');
         } catch (error) {
-            swalError('移除商品失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '移除商品失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };
@@ -51,9 +51,9 @@ const ShoppingCart = () => {
         try {
             await cartService.clearAllCart();
             getCart();
-            swalSuccess('已清空購物車');
+            showToast('success', '已清空購物車');
         } catch (error) {
-            swalError('清空購物車失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '清空購物車失敗', error.response?.data?.message || '發生錯誤');
             setIsLoading(false);
         }
     };

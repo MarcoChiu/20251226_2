@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as productService from '../../services/productService';
 import { Modal } from "bootstrap";
-import { swalError } from '../../utils/sweetAlert';
+import { showAlert } from '../../utils/sweetAlert';
 
 const Week2 = () => {
     const [products, setProducts] = useState([]);
@@ -20,7 +20,7 @@ const Week2 = () => {
                 const data = await productService.getProducts();
                 setProducts(data.products);
             } catch (error) {
-                swalError('取得產品失敗', error.response?.data?.message || '發生錯誤');
+                showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');
             } finally {
             }
         })();

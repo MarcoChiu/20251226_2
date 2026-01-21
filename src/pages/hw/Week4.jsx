@@ -5,7 +5,7 @@ import Pagination from '../../components/Pagination';
 import ProductCUModal from '../../components/ProductCUModal';
 import ProductDModal from '../../components/ProductDModal';
 import ProductCard from '../../components/ProductCard';
-import { swalSuccess, swalError } from '../../utils/sweetAlert';
+import { showToast, showAlert } from '../../utils/sweetAlert';
 
 const Week4 = () => {
     const [products, setProducts] = useState([]);
@@ -35,7 +35,7 @@ const Week4 = () => {
                 }, 0);
             }
         } catch (error) {
-            swalError('取得產品失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -53,9 +53,9 @@ const Week4 = () => {
             await productService.createProduct(productData);
             productModalRef.current.hide();
             await getProducts(pageInfo.current_page, false);
-            swalSuccess('新增成功');
+            showToast('success', '新增成功');
         } catch (error) {
-            swalError('新增失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '新增失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -73,9 +73,9 @@ const Week4 = () => {
             await productService.updateProduct(product.id, productData);
             productModalRef.current.hide();
             await getProducts(pageInfo.current_page, false);
-            swalSuccess('更新成功');
+            showToast('success', '更新成功');
         } catch (error) {
-            swalError('更新失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '更新失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }
@@ -92,9 +92,9 @@ const Week4 = () => {
                 await getProducts(pageInfo.current_page, false);
             }
 
-            swalSuccess('刪除成功');
+            showToast('success', '刪除成功');
         } catch (error) {
-            swalError('刪除失敗', error.response?.data?.message || '發生錯誤');
+            showAlert('error', '刪除失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
         }

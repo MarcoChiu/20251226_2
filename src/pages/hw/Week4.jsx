@@ -6,6 +6,7 @@ import ProductCUModal from '../../components/ProductCUModal';
 import ProductDModal from '../../components/ProductDModal';
 import ProductCard from '../../components/ProductCard';
 import { showToast, showAlert } from '../../utils/sweetAlert';
+import { scrollToTop } from '../../utils/scrollTo';
 
 const Week4 = () => {
     const [products, setProducts] = useState([]);
@@ -27,12 +28,7 @@ const Week4 = () => {
             setPageInfo(data.pagination);
 
             if (shouldScroll) {
-                setTimeout(() => {
-                    const scrollTo = document.querySelector('.container.mt-4');
-                    if (scrollTo) {
-                        scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 0);
+                scrollToTop();
             }
         } catch (error) {
             showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');

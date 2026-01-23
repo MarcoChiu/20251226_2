@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as cartService from '../../services/cartService';
 import { createOrder } from '../../services/orderService';
 import { showToast, showAlert } from '../../utils/sweetAlert';
+import { scrollToTop } from '../../utils/scrollTo';
 import Loading from '../../components/Loading';
 
 const ShoppingCart = () => {
@@ -25,6 +26,8 @@ const ShoppingCart = () => {
         try {
             const data = await cartService.getCart();
             setCart(data.data);
+            scrollToTop();
+
         } catch (error) {
             showAlert('error', '取得購物車失敗', error.response?.data?.message || '發生錯誤');
         } finally {

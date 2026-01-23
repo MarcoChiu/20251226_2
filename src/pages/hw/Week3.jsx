@@ -4,6 +4,7 @@ import * as productService from '../../services/productService';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 import { showToast, showAlert } from '../../utils/sweetAlert';
+import { scrollToTop } from '../../utils/scrollTo';
 
 const defaultProduct = {
     title: "",
@@ -43,14 +44,7 @@ const Week3 = () => {
             const data = await productService.getProducts(page);
             setProducts(data.products);
             setPageInfo(data.pagination);
-
-            // 滾動到商品列表
-            setTimeout(() => {
-                const scrollTo = document.querySelector('.container.mt-4');
-                if (scrollTo) {
-                    scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 0);
+            scrollToTop();
 
         } catch (error) {
             showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');

@@ -4,6 +4,7 @@ import OrderModal from '../../components/OrderModal';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 import { showAlert } from '../../utils/sweetAlert';
+import { scrollToTop } from '../../utils/scrollTo';
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
@@ -21,6 +22,8 @@ const Orders = () => {
             const data = await getOrders(page);
             setOrders(data.orders);
             setPagination(data.pagination);
+            scrollToTop();
+
         } catch (error) {
             showAlert('error', '取得訂單列表失敗', error.response?.data?.message || '發生錯誤');
         } finally {
@@ -43,7 +46,7 @@ const Orders = () => {
     return (
         <>
             {isLoading && <Loading />}
-            <OrderModal ref={orderModalRef} />
+            <OrderModal ref={orderModalRef} onPaymentSuccess={() => fetchOrders(pagination.current_page)} />
             <div className="container mt-4">
                 <h2 className="mb-4">訂單列表</h2>
                 {/* 電腦版 */}

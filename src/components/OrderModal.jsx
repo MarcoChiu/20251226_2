@@ -1,10 +1,34 @@
 import { useEffect, useRef, useImperativeHandle, forwardRef, useState } from 'react';
 import { Modal } from 'bootstrap';
+import { payOrder } from '../services/orderService';
+import { showToast, showAlert } from '../utils/sweetAlert';
+import Loading from './Loading';
 
 const OrderModal = forwardRef((props, ref) => {
     const modalRef = useRef(null);
     const modalInstance = useRef(null);
     const [tempOrder, setTempOrder] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handlePayment = async () => {
+        setIsLoading(true);
+        try {
+            const res = await payOrder(tempOrder.id);
+            showToast('success', '付款成功');
+            setTempOrder(prev => ({
+                ...prev,
+                is_paid: true,
+                paid_date: Math.floor(Date.now() / 1000)
+            }));
+            if (props.onPaymentSuccess) {
+                props.onPaymentSuccess();
+            }
+        } catch (error) {
+            showAlert('error', '付款失敗', error.response?.data?.message || '發生錯誤');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         modalInstance.current = new Modal(modalRef.current);
@@ -31,6 +55,7 @@ const OrderModal = forwardRef((props, ref) => {
     return (
         <div id="orderModal" ref={modalRef} className="modal fade" tabIndex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg modal-dialog-centered">
+                {isLoading && <Loading />}
                 <div className="modal-content border-0 shadow-lg">
                     <div className="modal-header bg-dark text-white border-0 py-3">
                         <h5 className="modal-title d-flex align-items-center gap-2" id="orderModalLabel">
@@ -238,6 +263,17 @@ const OrderModal = forwardRef((props, ref) => {
                         <button type="button" className="btn btn-secondary px-4 rounded-pill shadow-sm" onClick={() => modalInstance.current.hide()}>
                             關閉視窗
                         </button>
+                        {!tempOrder.is_paid && (
+                            <button
+                                type="button"
+                                className="btn btn-primary px-4 rounded-pill shadow-sm ms-2"
+                                onClick={handlePayment}
+                                disabled={isLoading}
+                            >
+                                <i className="bi bi-credit-card mx-1"></i>
+                                立即付款
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

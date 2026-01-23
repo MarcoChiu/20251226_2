@@ -5,6 +5,7 @@ import Pagination from '../../components/Pagination';
 import ProductUserModal from '../../components/ProductUserModal';
 import ProductCard from '../../components/ProductCard';
 import { showAlert } from '../../utils/sweetAlert';
+import { scrollToTop } from '../../utils/scrollTo';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -22,14 +23,8 @@ const ProductList = () => {
             const data = await productService.getUserProducts(page);
             setProducts(data.products);
             setPageInfo(data.pagination);
+            scrollToTop();
 
-            // 滾動到商品列表
-            setTimeout(() => {
-                const scrollTo = document.querySelector('.container.mt-4');
-                if (scrollTo) {
-                    scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 0);
 
         } catch (error) {
             showAlert('error', '取得產品失敗', error.response?.data?.message || '發生錯誤');

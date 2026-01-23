@@ -21,3 +21,10 @@ export const getOrder = async (orderId) => {
     const response = await axios.get(url);
     return response.data;
 };
+
+
+export const payOrder = async (orderId) => {
+    const url = `${API_ENDPOINTS.order.replace(/order$/, 'pay')}/${orderId}`;
+    const response = await axios.post(url);
+    return response.data;
+};

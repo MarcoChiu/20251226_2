@@ -74,6 +74,11 @@ prop-types
 npm install prop-types
 ```
 
+React Loader Spinner
+```bash
+npm i react-loader-spinner
+```
+
 六角API申請
 ```bash
 https://ec-course-api.hexschool.io/

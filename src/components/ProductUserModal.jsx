@@ -106,7 +106,7 @@ const ProductUserModal = forwardRef((props, ref) => {
                                             value={qty}
                                             onChange={(e) => setQty(Number(e.target.value))}
                                         >
-                                            {[...Array(10)].map((_, i) => (
+                                            {[...Array(20)].map((_, i) => (
                                                 <option key={i + 1} value={i + 1}>{i + 1}</option>
                                             ))}
                                         </select>
@@ -120,10 +120,10 @@ const ProductUserModal = forwardRef((props, ref) => {
                                     </button>
                                 </div>
 
-                                {/* Image Overlay/Gallery Section */}
+
                                 {product.imagesUrl && product.imagesUrl.length > 0 && (
                                     <div className="d-flex gap-2 overflow-auto">
-                                        {/* Main image thumbnail */}
+
                                         {product.imageUrl && (
                                             <div
                                                 className={`ratio ratio-1x1 border rounded cursor-pointer ${currentImage === product.imageUrl ? 'border-primary border-2' : 'border-light'}`}
@@ -133,7 +133,7 @@ const ProductUserModal = forwardRef((props, ref) => {
                                                 <img src={product.imageUrl} className="img-fluid object-fit-cover" alt="Main" />
                                             </div>
                                         )}
-                                        {/* Additional images thumbnails */}
+
                                         {product.imagesUrl.map((img, index) => (
                                             img && (
                                                 <div

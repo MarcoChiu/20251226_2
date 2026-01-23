@@ -10,4 +10,5 @@ export const API_ENDPOINTS = {
     products: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/products` : undefined,
     product: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/product` : undefined,
     cart: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/cart` : undefined,
+    order: apiBaseUrl && myPath ? `${apiBaseUrl}/api/${myPath}/order` : undefined,
 }

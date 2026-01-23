@@ -16,32 +16,33 @@ const Login = lazy(() => import('./pages/Login'));
 
 const ProductList = lazy(() => import('./pages/week5/ProductList'));
 const ShoppingCart = lazy(() => import('./pages/week5/ShoppingCart'));
+const Orders = lazy(() => import('./pages/week5/Orders'));
 
 export const routes = [
   {
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <Home />, title: '首頁', isShow: true },
-      { path: 'about', element: <About />, title: '關於我', isShow: true },
+      { index: true, element: <Home />, title: '首頁', isShow: true, isAuth: false },
       {
-        path: 'hw', title: '第一至四週作業', isShow: true, children:
+        path: 'week5', title: '前台(五六週)', isShow: true, isAuth: true, children:
           [
-            { index: true, element: <Week1 />, title: '第一週 - 從函式拆解認識設計模式', isShow: true },
+            { index: true, element: <ProductList />, title: '商品列表(前台)', isShow: true, isAuth: true },
+            { path: 'cart', element: <ShoppingCart />, title: '購物車(前台)', isShow: true, isAuth: true },
+            { path: 'orders', element: <Orders />, title: '訂單列表(前台)', isShow: true, isAuth: true },
+          ],
+      },
+      {
+        path: 'hw', title: '後台(一~四週)', isShow: true, children:
+          [
+            { index: true, element: <Week1 />, title: '第一週 - 從函式拆解認識設計模式', isShow: true, isAuth: false },
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
             { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
             { path: 'week4', element: <Week4 />, title: '第四週 - 元件化', isShow: true, isAuth: true },
           ],
       },
       {
-        path: 'week5', title: '第五週 - Vite、React Router', isShow: true, isAuth: true, children:
-          [
-            { index: true, element: <ProductList />, title: '商品列表', isShow: true },
-            { path: 'cart', element: <ShoppingCart />, title: '購物車', isShow: true },
-          ],
-      },
-      {
-        path: 'photo', element: <PhotoLayout />, title: '相簿', isShow: true, isAuth: true,
+        path: 'photo', element: <PhotoLayout />, title: '相簿', isShow: false, isAuth: true,
         children: [
           { index: true, element: <PhotoIndex />, title: '歡迎使用照片搜尋系統', isShow: true },
           { path: 'detail', element: <PhotoDetail />, title: '照片詳情', isShow: false },
@@ -52,9 +53,8 @@ export const routes = [
           { path: 'params/:id/:category/:name', element: <PhotoParams />, title: '參數詳情', isShow: false },
         ],
       },
-      {
-        path: 'login', element: <Login />, title: '登入', isShow: false,
-      },
+      { path: 'about', element: <About />, title: '關於我', isShow: false, isAuth: false },
+      { path: 'login', element: <Login />, title: '登入', isShow: false, isAuth: false },
     ],
   },
 ];

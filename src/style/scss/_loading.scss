@@ -19,7 +19,7 @@
     gap: 1.5rem;
 }
 
-.spinner {
+/* .spinner {
     position: relative;
     width: 80px;
     height: 80px;
@@ -61,7 +61,7 @@
     100% {
         transform: rotate(360deg);
     }
-}
+} */
 
 .loading-text {
     font-size: 1.125rem;
@@ -84,6 +84,6 @@
 }
 
 /* 添加一些微妙的陰影效果 */
-.spinner-ring {
+/* .spinner-ring {
     filter: drop-shadow(0 2px 4px rgba(249, 121, 163, 0.2));
-}
+} */

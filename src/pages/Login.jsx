@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { setToken } from '../utils/frontCookie';
 import Loading from '../components/Loading';
 import { showToast, showAlert } from '../utils/sweetAlert';
@@ -8,31 +9,23 @@ import { login } from '../services/authService';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const data = await login({
-                username: formData.email,
-                password: formData.password,
+            const response = await login({
+                username: data.email,
+                password: data.password,
             });
-            //console.log('Login success:', data);
 
-            const { token, expired } = data;
+            const { token, expired } = response;
             if (token) {
                 await showToast('success', '登入成功');
 
@@ -43,7 +36,6 @@ const Login = () => {
             }
 
         } catch (error) {
-            //console.error('Login failed:', error);
             showAlert('error', '登入失敗', error.response?.data?.message || '發生錯誤');
         } finally {
             setIsLoading(false);
@@ -59,21 +51,27 @@ const Login = () => {
                         <div className="card shadow-sm">
                             <div className="card-body">
                                 <h2 className="card-title text-center mb-4">登入</h2>
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label">
                                             Email
                                         </label>
                                         <input
                                             type="email"
-                                            className="form-control"
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                             id="email"
-                                            name="email"
                                             placeholder="請輸入email name@example.com"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
+                                            {...register('email', {
+                                                required: 'Email 為必填',
+                                                pattern: {
+                                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                    message: 'Email 格式不正確',
+                                                },
+                                            })}
                                         />
+                                        {errors.email && (
+                                            <div className="invalid-feedback">{errors.email.message}</div>
+                                        )}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label">
@@ -81,14 +79,16 @@ const Login = () => {
                                         </label>
                                         <input
                                             type="password"
-                                            className="form-control"
+                                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                             id="password"
-                                            name="password"
                                             placeholder="請輸入密碼"
-                                            value={formData.password}
-                                            onChange={handleChange}
-                                            required
+                                            {...register('password', {
+                                                required: '密碼為必填',
+                                            })}
                                         />
+                                        {errors.password && (
+                                            <div className="invalid-feedback">{errors.password.message}</div>
+                                        )}
                                     </div>
                                     <div className="d-grid gap-2">
                                         <button type="submit" className="btn btn-primary" disabled={isLoading}>

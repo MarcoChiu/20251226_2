@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import * as cartService from '../../services/cartService';
+import { createOrder } from '../../services/orderService';
 import { showToast, showAlert } from '../../utils/sweetAlert';
 import Loading from '../../components/Loading';
 
 const ShoppingCart = () => {
     const [cart, setCart] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset
+    } = useForm();
 
     useEffect(() => {
         getCart();
@@ -58,6 +67,27 @@ const ShoppingCart = () => {
         }
     };
 
+    const onSubmit = async (data) => {
+        setIsLoading(true);
+        const { message, ...user } = data;
+        const orderData = {
+            user,
+            message
+        };
+
+        try {
+            const response = await createOrder(orderData);
+            showToast('success', '訂單建立成功');
+            reset(); // 重置表單
+            //getCart(); // 重新取得購物車 (通常會變空) 作業這邊有需求要清空購物車
+            navigate('/orders');
+        } catch (error) {
+            showAlert('error', '建立訂單失敗', error.response?.data?.message || '發生錯誤');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
             {isLoading && <Loading />}
@@ -74,7 +104,7 @@ const ShoppingCart = () => {
                             </button>
                         </div>
 
-                        {/* Desktop View */}
+                        {/* 電腦版 */}
                         <div className="table-responsive d-none d-md-block">
                             <table className="table align-middle">
                                 <thead>
@@ -156,7 +186,7 @@ const ShoppingCart = () => {
                             </table>
                         </div>
 
-                        {/* Mobile View */}
+                        {/* 手機板 */}
                         <div className="d-md-none">
                             {cart.carts.map((item) => (
                                 <div key={item.id} className="card mb-3 shadow-sm border-0">
@@ -240,6 +270,96 @@ const ShoppingCart = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* 訂單資訊 */}
+                        <div className="card shadow-sm border-0 mt-5 mb-5">
+                            <div className="card-body">
+                                <h3 className="card-title text-center mb-4">填寫訂購資訊</h3>
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="mb-3">
+                                        <label htmlFor="email" className="form-label">Email</label>
+                                        <input
+                                            type="email"
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                            id="email"
+                                            placeholder="請輸入 Email"
+                                            {...register('email', {
+                                                required: 'Email 為必填',
+                                                pattern: {
+                                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                    message: 'Email 格式不正確',
+                                                },
+                                            })}
+                                        />
+                                        {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="name" className="form-label">收件人姓名</label>
+                                        <input
+                                            type="text"
+                                            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                                            id="name"
+                                            placeholder="請輸入姓名"
+                                            {...register('name', { required: '姓名為必填' })}
+                                        />
+                                        {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="tel" className="form-label">收件人電話</label>
+                                        <input
+                                            type="tel"
+                                            className={`form-control ${errors.tel ? 'is-invalid' : ''}`}
+                                            id="tel"
+                                            placeholder="請輸入電話"
+                                            {...register('tel', {
+                                                required: '電話為必填',
+                                                minLength: {
+                                                    value: 9,
+                                                    message: '電話號碼需超過 9 碼'
+                                                },
+                                                pattern: {
+                                                    value: /^09\d{8}$/,
+                                                    message: '請輸入有效的台灣手機號碼 (09xxxxxxxx)',
+                                                }
+                                            })}
+                                        />
+                                        {errors.tel && <div className="invalid-feedback">{errors.tel.message}</div>}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="address" className="form-label">收件人地址</label>
+                                        <input
+                                            type="text"
+                                            className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                                            id="address"
+                                            placeholder="請輸入地址"
+                                            {...register('address', { required: '地址為必填' })}
+                                        />
+                                        {errors.address && <div className="invalid-feedback">{errors.address.message}</div>}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="message" className="form-label">留言</label>
+                                        <textarea
+                                            className="form-control"
+                                            id="message"
+                                            rows="3"
+                                            placeholder="如果有什麼要告訴我們的..."
+                                            {...register('message')}
+                                        ></textarea>
+                                    </div>
+
+                                    <div className="text-end">
+                                        <button type="submit" className="btn btn-danger btn-lg px-5">
+                                            送出訂單
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 ) : (
                     <div className="alert alert-secondary text-center">
@@ -249,6 +369,6 @@ const ShoppingCart = () => {
             </div>
         </>
     );
-}
+};
 
 export default ShoppingCart;

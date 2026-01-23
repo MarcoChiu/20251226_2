@@ -126,7 +126,8 @@ const OrderModal = forwardRef((props, ref) => {
                                 </h6>
                             </div>
                             <div className="card-body p-0">
-                                <div className="table-responsive">
+                                {/* 電腦版 */}
+                                <div className="table-responsive d-none d-md-block">
                                     <table className="table align-middle mb-0 table-hover">
                                         <thead className="table-light">
                                             <tr>
@@ -186,6 +187,49 @@ const OrderModal = forwardRef((props, ref) => {
                                             </tr>
                                         </tfoot>
                                     </table>
+                                </div>
+
+                                {/* 手機板 */}
+                                <div className="d-md-none">
+                                    {Object.values(tempOrder.products).map((item) => (
+                                        <div key={item.id} className="p-3 border-bottom">
+                                            <div className="d-flex mb-3">
+                                                <div
+                                                    style={{
+                                                        width: '80px',
+                                                        height: '80px',
+                                                        minWidth: '80px',
+                                                        backgroundSize: 'cover',
+                                                        backgroundPosition: 'center',
+                                                        backgroundImage: `url(${item.product.imageUrl})`
+                                                    }}
+                                                    className="rounded border shadow-sm me-3"
+                                                ></div>
+                                                <div className="flex-grow-1">
+                                                    <div className="fw-bold text-dark mb-1">{item.product.title}</div>
+                                                    {item.coupon && (
+                                                        <small className="text-success d-flex align-items-center mb-1">
+                                                            <i className="bi bi-ticket-perforated-fill me-1"></i>
+                                                            {item.coupon.title}
+                                                        </small>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="d-flex align-items-center bg-light px-3 py-1 rounded-pill border">
+                                                    <span className="fw-bold me-1">{item.qty}</span>
+                                                    <span className="text-muted small">{item.product.unit}</span>
+                                                </div>
+                                                <div className="fw-bold text-primary fs-5">
+                                                    ${item.final_total?.toLocaleString()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div className="p-3 bg-light d-flex justify-content-between align-items-center border-top">
+                                        <span className="fw-bold text-secondary">總金額</span>
+                                        <span className="fs-3 fw-bold text-primary">${tempOrder.total?.toLocaleString()}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

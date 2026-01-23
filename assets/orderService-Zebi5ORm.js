@@ -1,0 +1,1 @@
+import{a as e,A as a}from"./index-RjUf2KTp.js";const n=async s=>{const r={data:s};return(await e.post(a.order,r)).data},c=async(s=1)=>{const r=`${a.order}s?page=${s}`;return(await e.get(r)).data},p=async s=>{const r=`${a.order}/${s}`;return(await e.get(r)).data};export{p as a,n as c,c as g};

@@ -1,0 +1,1 @@
+import{a as e,A as a}from"./index-DWMnWU1Y.js";const n=async r=>{const s={data:r};return(await e.post(a.order,s)).data},c=async r=>{const s=`${a.order}/${r}`;return(await e.get(s)).data},p=async r=>{const s=`${a.order.replace(/order$/,"pay")}/${r}`;return(await e.post(s)).data};export{n as c,c as g,p};

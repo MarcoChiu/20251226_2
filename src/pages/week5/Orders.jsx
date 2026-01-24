@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { getOrders, getOrder } from '../../services/orderService';
+import * as orderService from '../../services/orderService';
 import OrderModal from '../../components/OrderModal';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
@@ -13,13 +13,13 @@ const Orders = () => {
     const orderModalRef = useRef(null);
 
     useEffect(() => {
-        fetchOrders();
+        getOrders();
     }, []);
 
-    const fetchOrders = async (page = 1) => {
+    const getOrders = async (page = 1) => {
         setIsLoading(true);
         try {
-            const data = await getOrders(page);
+            const data = await orderService.getOrders(page);
             setOrders(data.orders);
             setPagination(data.pagination);
             scrollToTop();
@@ -34,7 +34,7 @@ const Orders = () => {
     const handleOpenModal = async (orderId) => {
         setIsLoading(true);
         try {
-            const data = await getOrder(orderId);
+            const data = await orderService.getOrder(orderId);
             orderModalRef.current.show(data.order);
         } catch (error) {
             showAlert('error', '取得訂單細節失敗', error.response?.data?.message || '發生錯誤');
@@ -46,7 +46,7 @@ const Orders = () => {
     return (
         <>
             {isLoading && <Loading />}
-            <OrderModal ref={orderModalRef} onPaymentSuccess={() => fetchOrders(pagination.current_page)} />
+            <OrderModal ref={orderModalRef} onPaymentSuccess={() => getOrders(pagination.current_page)} />
             <div className="container mt-4">
                 <h2 className="mb-4">訂單列表</h2>
                 {/* 電腦版 */}
@@ -178,7 +178,7 @@ const Orders = () => {
                 <Pagination
                     currentPage={pagination.current_page}
                     totalPages={pagination.total_pages}
-                    onPageChange={fetchOrders}
+                    onPageChange={getOrders}
                 />
             </div>
         </>

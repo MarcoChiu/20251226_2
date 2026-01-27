@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import * as cartService from '../services/cartService';
-import { showToast, showAlert } from '../utils/sweetAlert';
+import { showToast, showAlert, showConfirm } from '../utils/sweetAlert';
 import Loading from './Loading';
 
 const ProductUserModal = forwardRef((props, ref) => {
@@ -33,18 +33,25 @@ const ProductUserModal = forwardRef((props, ref) => {
     }));
 
     const handleAddToCart = async () => {
-        if (!isAuth) {
-            showAlert('warning', '請先登入', '需登入會員才能加入購物車');
-            modalInstance.current.hide();
-            navigate('/login');
-            return;
-        }
+
         if (!product) return;
         setIsLoading(true);
         try {
             await cartService.addCart(product.id, qty);
             modalInstance.current.hide();
-            showToast('success', '加入購物車成功');
+            // showToast('success', '加入購物車成功');
+            const result = await showConfirm({
+                title: '加入購物車成功',
+                text: '商品已成功加入購物車',
+                icon: 'success',
+                confirmButtonText: '填寫訂單',
+                cancelButtonText: '繼續購物',
+                confirmButtonColor: '#198754',
+                cancelButtonColor: '#6c757d',
+            });
+            if (result.isConfirmed) {
+                navigate('/week5/cart');
+            }
         } catch (error) {
             showAlert('error', '加入購物車失敗', error.response?.data?.message || '發生錯誤');
         } finally {

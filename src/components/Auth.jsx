@@ -3,7 +3,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Loading from './Loading';
 import { useAuth } from '../contexts/AuthContext';
 import { getToken } from '../utils/frontCookie';
-import { checkAuth, setupAxiosHeaders } from '../services/authService';
+import { checkAuth } from '../services/authService';
 
 const Auth = ({ children }) => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Auth = ({ children }) => {
             navigate('/login', { state: { from: location }, replace: true });
             return;
         }
-        setupAxiosHeaders(token);
+
 
 
         (async () => {

@@ -29,8 +29,8 @@ export const routes = [
         path: 'week5', title: '前台(五~六週)', isShow: true, isAuth: false, children:
           [
             { index: true, element: <ProductList />, title: '商品列表(前台)', isShow: true, isAuth: false },
-            { path: 'cart', element: <ShoppingCart />, title: '購物車(前台)', isShow: true, isAuth: true },
-            { path: 'orders', element: <Orders />, title: '訂單列表(前台)', isShow: true, isAuth: true },
+            { path: 'cart', element: <ShoppingCart />, title: '購物車(前台)', isShow: true, isAuth: false },
+            { path: 'orders', element: <Orders />, title: '訂單列表(前台)', isShow: true, isAuth: false },
           ],
       },
       {

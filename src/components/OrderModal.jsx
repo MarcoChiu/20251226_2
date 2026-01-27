@@ -14,12 +14,8 @@ const OrderModal = forwardRef((props, ref) => {
         setIsLoading(true);
         try {
             const res = await payOrder(tempOrder.id);
+            modalInstance.current.hide();
             showToast('success', '付款成功');
-            setTempOrder(prev => ({
-                ...prev,
-                is_paid: true,
-                paid_date: Math.floor(Date.now() / 1000)
-            }));
             if (props.onPaymentSuccess) {
                 props.onPaymentSuccess();
             }

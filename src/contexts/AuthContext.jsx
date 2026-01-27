@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { getToken, removeToken } from "../utils/frontCookie";
-import { checkAuth, setupAxiosHeaders } from "../services/authService";
+import { checkAuth } from "../services/authService";
 
 const AuthContext = createContext(null);
 
@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
         (async () => {
             const token = getToken();
             if (token) {
-                setupAxiosHeaders(token);
+
                 try {
                     await checkAuth();
                     setIsAuth(true);

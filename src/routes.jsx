@@ -13,6 +13,7 @@ const Week2 = lazy(() => import('./pages/hw/Week2'));
 const Week3 = lazy(() => import('./pages/hw/Week3'));
 const Week4 = lazy(() => import('./pages/hw/Week4'));
 const Login = lazy(() => import('./pages/Login'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const ProductList = lazy(() => import('./pages/week5/ProductList'));
 const ShoppingCart = lazy(() => import('./pages/week5/ShoppingCart'));
@@ -25,9 +26,9 @@ export const routes = [
     children: [
       { index: true, element: <Home />, title: '首頁', isShow: true, isAuth: false },
       {
-        path: 'week5', title: '前台(五~六週)', isShow: true, isAuth: true, children:
+        path: 'week5', title: '前台(五~六週)', isShow: true, isAuth: false, children:
           [
-            { index: true, element: <ProductList />, title: '商品列表(前台)', isShow: true, isAuth: true },
+            { index: true, element: <ProductList />, title: '商品列表(前台)', isShow: true, isAuth: false },
             { path: 'cart', element: <ShoppingCart />, title: '購物車(前台)', isShow: true, isAuth: true },
             { path: 'orders', element: <Orders />, title: '訂單列表(前台)', isShow: true, isAuth: true },
           ],
@@ -55,6 +56,7 @@ export const routes = [
       },
       { path: 'about', element: <About />, title: '關於我', isShow: false, isAuth: false },
       { path: 'login', element: <Login />, title: '登入', isShow: false, isAuth: false },
+      { path: '*', element: <NotFound />, title: '404', isShow: false },
     ],
   },
 ];

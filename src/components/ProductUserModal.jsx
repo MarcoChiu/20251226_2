@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Modal } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import * as cartService from '../services/cartService';
 import { showToast, showAlert } from '../utils/sweetAlert';
 import Loading from './Loading';
@@ -11,6 +13,8 @@ const ProductUserModal = forwardRef((props, ref) => {
     const [currentImage, setCurrentImage] = useState('');
     const modalRef = useRef(null);
     const modalInstance = useRef(null);
+    const { isAuth } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         modalInstance.current = new Modal(modalRef.current, { backdrop: 'static' });
@@ -29,6 +33,12 @@ const ProductUserModal = forwardRef((props, ref) => {
     }));
 
     const handleAddToCart = async () => {
+        if (!isAuth) {
+            showAlert('warning', '請先登入', '需登入會員才能加入購物車');
+            modalInstance.current.hide();
+            navigate('/login');
+            return;
+        }
         if (!product) return;
         setIsLoading(true);
         try {

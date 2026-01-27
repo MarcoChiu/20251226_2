@@ -1,0 +1,1 @@
+import{j as s}from"./index-BySXDTZ2.js";const r=()=>s.jsxs("div",{className:"container mt-3",children:[s.jsx("h3",{className:"mt-4",children:'請選擇上方選單"每堂作業"'}),s.jsx("p",{children:"助教:前台免登入"}),s.jsx("p",{children:"助教:後台才需要token"})]});export{r as default};

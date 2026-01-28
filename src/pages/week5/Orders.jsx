@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as orderService from '../../services/orderService';
 import OrderModal from '../../components/OrderModal';
 import Loading from '../../components/Loading';
@@ -11,10 +12,18 @@ const Orders = () => {
     const [pagination, setPagination] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const orderModalRef = useRef(null);
+    const location = useLocation();
 
     useEffect(() => {
         getOrders();
     }, []);
+
+    useEffect(() => {
+        const orderId = location.state?.orderId;
+        if (orderId) {
+            handleOpenModal(orderId);
+        }
+    }, [location.state?.orderId]);
 
     const getOrders = async (page = 1) => {
         setIsLoading(true);

@@ -82,10 +82,10 @@ const ShoppingCart = () => {
 
         try {
             const response = await createOrder(orderData);
+            const orderId = response?.orderId;
             showToast('success', '訂單建立成功');
             reset(); // 重置表單
-            //getCart(); // 重新取得購物車 (通常會變空) 作業這邊有需求要清空購物車
-            navigate('/week5/orders');
+            navigate('/week5/orders', { state: { orderId } });
         } catch (error) {
             showAlert('error', '建立訂單失敗', error.response?.data?.message || '發生錯誤');
         } finally {

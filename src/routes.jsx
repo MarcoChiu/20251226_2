@@ -12,6 +12,8 @@ const Week1 = lazy(() => import('./pages/admin/Week1'));
 const Week2 = lazy(() => import('./pages/admin/Week2'));
 const Week3 = lazy(() => import('./pages/admin/Week3'));
 const Week4 = lazy(() => import('./pages/admin/Week4'));
+const Week7 = lazy(() => import('./pages/admin/Week7'));
+
 const Login = lazy(() => import('./pages/Login'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -26,7 +28,7 @@ export const routes = [
     children: [
       { index: true, element: <Home />, title: '首頁', isShow: true, isAuth: false },
       {
-        path: 'week5', title: '前台(五~六週)', isShow: true, isAuth: false, children:
+        path: 'front', title: '前台(五~六週)', isShow: true, isAuth: false, children:
           [
             { index: true, element: <ProductList />, title: '商品列表(前台)', isShow: true, isAuth: false },
             { path: 'cart', element: <ShoppingCart />, title: '購物車(前台)', isShow: true, isAuth: false },
@@ -34,12 +36,13 @@ export const routes = [
           ],
       },
       {
-        path: 'hw', title: '後台(一~四週)', isShow: true, children:
+        path: 'admin', title: '後台(一~四週、七週)', isShow: true, children:
           [
             { index: true, element: <Week1 />, title: '第一週 - 從函式拆解認識設計模式', isShow: true, isAuth: false },
             { path: 'week2', element: <Week2 />, title: '第二週 - RESTful API 串接', isShow: true, isAuth: true },
             { path: 'week3', element: <Week3 />, title: '第三週 - 熟練 React.js', isShow: true, isAuth: true },
             { path: 'week4', element: <Week4 />, title: '第四週 - 元件化', isShow: true, isAuth: true },
+            { path: 'week7', element: <Week7 />, title: '第七週 - Redux 與 Redux Toolkit', isShow: true, isAuth: true },
           ],
       },
       {

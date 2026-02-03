@@ -145,15 +145,28 @@ const ShoppingCart = () => {
                                             </td>
                                             <td>
                                                 <div className="input-group input-group-sm">
-                                                    <select
-                                                        className="form-select"
-                                                        value={item.qty}
-                                                        onChange={(e) => handleUpdateCartItem(item, Number(e.target.value))}
+                                                    <button
+                                                        className="btn btn-outline-secondary"
+                                                        type="button"
+                                                        onClick={() => handleUpdateCartItem(item, item.qty - 1)}
+                                                        disabled={item.qty === 1}
                                                     >
-                                                        {[...Array(20)].map((_, i) => (
-                                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                                        ))}
-                                                    </select>
+                                                        -
+                                                    </button>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control text-center p-0"
+                                                        value={item.qty}
+                                                        readOnly
+                                                        style={{ maxWidth: '50px' }}
+                                                    />
+                                                    <button
+                                                        className="btn btn-outline-secondary"
+                                                        type="button"
+                                                        onClick={() => handleUpdateCartItem(item, item.qty + 1)}
+                                                    >
+                                                        +
+                                                    </button>
                                                     <span className="input-group-text" id="basic-addon2">{item.product.unit}</span>
                                                 </div>
                                             </td>
@@ -227,16 +240,32 @@ const ShoppingCart = () => {
 
                                                 <div className="d-flex justify-content-between align-items-end">
                                                     <div className="d-flex align-items-center">
-                                                        <select
-                                                            className="form-select form-select-sm me-2"
-                                                            value={item.qty}
-                                                            onChange={(e) => handleUpdateCartItem(item, Number(e.target.value))}
-                                                            style={{ width: '70px', minWidth: '70px' }}
-                                                        >
-                                                            {[...Array(20)].map((_, i) => (
-                                                                <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                                            ))}
-                                                        </select>
+                                                        <div className="input-group input-group-sm me-2" style={{ width: 'auto' }}>
+                                                            <button
+                                                                className="btn btn-outline-secondary"
+                                                                type="button"
+                                                                onClick={() => handleUpdateCartItem(item, item.qty - 1)}
+                                                                disabled={item.qty === 1}
+                                                                style={{ padding: '0.25rem 0.5rem' }}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <input
+                                                                type="number"
+                                                                className="form-control text-center p-0"
+                                                                value={item.qty}
+                                                                readOnly
+                                                                style={{ width: '50px', minWidth: '40px' }}
+                                                            />
+                                                            <button
+                                                                className="btn btn-outline-secondary"
+                                                                type="button"
+                                                                onClick={() => handleUpdateCartItem(item, item.qty + 1)}
+                                                                style={{ padding: '0.25rem 0.5rem' }}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
                                                         <span className="small text-muted text-nowrap">{item.product.unit}</span>
                                                     </div>
                                                     <div className="text-end">

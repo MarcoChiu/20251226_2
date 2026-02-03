@@ -117,16 +117,30 @@ const ProductUserModal = forwardRef((props, ref) => {
                                 <div className="p-3 bg-light rounded mb-4">
                                     <div className="d-flex align-items-center mb-3">
                                         <label htmlFor="qtySelect" className="form-label me-3 mb-0 fw-bold">數量</label>
-                                        <select
-                                            id="qtySelect"
-                                            className="form-select w-auto"
-                                            value={qty}
-                                            onChange={(e) => setQty(Number(e.target.value))}
-                                        >
-                                            {[...Array(20)].map((_, i) => (
-                                                <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                            ))}
-                                        </select>
+                                        <div className="input-group w-auto">
+                                            <button
+                                                className="btn btn-outline-secondary"
+                                                type="button"
+                                                onClick={() => setQty(pre => Math.max(1, pre - 1))}
+                                            >
+                                                -
+                                            </button>
+                                            <input
+                                                id="qtySelect"
+                                                type="number"
+                                                className="form-control text-center"
+                                                value={qty}
+                                                readOnly
+                                                style={{ maxWidth: '80px' }}
+                                            />
+                                            <button
+                                                className="btn btn-outline-secondary"
+                                                type="button"
+                                                onClick={() => setQty(pre => pre + 1)}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
                                     </div>
                                     <button
                                         className="btn btn-primary w-100 py-2 fw-bold shadow-sm"

@@ -8,16 +8,16 @@ const PhotoIndex = lazy(() => import('./pages/photo/PhotoIndex'));
 const PhotoDetail = lazy(() => import('./pages/photo/PhotoDetail'));
 const PhotoQuery = lazy(() => import('./pages/photo/PhotoQuery'));
 const PhotoParams = lazy(() => import('./pages/photo/PhotoParams'));
-const Week1 = lazy(() => import('./pages/hw/Week1'));
-const Week2 = lazy(() => import('./pages/hw/Week2'));
-const Week3 = lazy(() => import('./pages/hw/Week3'));
-const Week4 = lazy(() => import('./pages/hw/Week4'));
+const Week1 = lazy(() => import('./pages/admin/Week1'));
+const Week2 = lazy(() => import('./pages/admin/Week2'));
+const Week3 = lazy(() => import('./pages/admin/Week3'));
+const Week4 = lazy(() => import('./pages/admin/Week4'));
 const Login = lazy(() => import('./pages/Login'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-const ProductList = lazy(() => import('./pages/week5/ProductList'));
-const ShoppingCart = lazy(() => import('./pages/week5/ShoppingCart'));
-const Orders = lazy(() => import('./pages/week5/Orders'));
+const ProductList = lazy(() => import('./pages/front/ProductList'));
+const ShoppingCart = lazy(() => import('./pages/front/ShoppingCart'));
+const Orders = lazy(() => import('./pages/front/Orders'));
 
 export const routes = [
   {
